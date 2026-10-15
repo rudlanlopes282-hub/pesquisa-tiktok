@@ -274,19 +274,27 @@
       </button>
     </div>
 
-    <!-- ETAPA 7: Validação do Vídeo -->
+    <!-- ETAPA 7: Validação do Vídeo (Capa interativa + Carregamento do Vídeo) -->
     <div id="step-7" class="step-view hidden bg-white rounded-3xl p-6 shadow-xl shadow-slate-100 border border-slate-100 space-y-5">
       <div class="text-center space-y-1">
         <h2 class="text-xl font-bold text-slate-900">Confirmação de Visualização</h2>
         <p class="text-xs text-slate-500">Assista ao vídeo abaixo por 40 segundos para liberar o saldo acumulado de <span class="total-balance-display">R$ 872,75</span>.</p>
       </div>
       
-      <div id="video-container" class="w-full aspect-[9/16] max-h-[340px] bg-black rounded-2xl overflow-hidden relative shadow-inner">
+      <div id="video-container" class="w-full aspect-[9/16] max-h-[340px] bg-slate-900 rounded-2xl overflow-hidden relative shadow-inner flex items-center justify-center">
+        <!-- Capa de apresentação antes do clique -->
+        <div id="video-preview-card" onclick="startVideoPlayback()" class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-b from-slate-800 to-black p-4 text-center cursor-pointer group">
+          <div class="w-16 h-16 bg-pink-600 group-hover:bg-pink-500 text-white rounded-full flex items-center justify-center text-2xl shadow-lg pl-1 transition-all group-active:scale-95 animate-pulse">
+            ▶
+          </div>
+          <p class="text-white text-sm font-extrabold mt-4">CLIQUE PARA ASSISTIR O VÍDEO</p>
+          <p class="text-slate-400 text-xs mt-1">O tempo será contabilizado após o clique</p>
+        </div>
       </div>
 
       <div class="space-y-2">
         <div class="flex justify-between items-center text-xs font-semibold text-slate-600">
-          <span id="timer-status">Assistindo ao vídeo...</span>
+          <span id="timer-status">Clique no Play acima para iniciar</span>
           <span id="timer-count">40s restantes</span>
         </div>
         <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
@@ -588,6 +596,7 @@
     let discountInterval = null;
     let hasDiscountBeenApplied = false;
     let shareCount = 0;
+    let isVideoPlaying = false;
 
     const fakeNotifications = [
       { name: "Ricardo Almeida de Castanhal", text: "sacou R$ 540,90" },
@@ -765,13 +774,12 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
       if (stepNumber === 7) {
-        startVideoPlayer();
+        resetVideoContainer();
       } else {
         stopVideoPlayer();
       }
     }
 
-    // --- VERIFICAÇÃO DE IDADE COM INPUT NATIVO DE DATA ---
     function verifyBirthDate() {
       const dateInput = document.getElementById('birth-date-input').value;
 
@@ -863,11 +871,36 @@
       });
     }
 
-    function startVideoPlayer() {
+    function resetVideoContainer() {
       const container = document.getElementById('video-container');
-      container.innerHTML = `<iframe id="yt-player" class="w-full h-full pointer-events-auto" src="https://www.youtube.com/embed/Q6OJeydSN_Y?autoplay=1&mute=0&loop=1&playlist=Q6OJeydSN_Y" title="YouTube Shorts" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+      container.innerHTML = `
+        <div id="video-preview-card" onclick="startVideoPlayback()" class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-b from-slate-800 to-black p-4 text-center cursor-pointer group">
+          <div class="w-16 h-16 bg-pink-600 group-hover:bg-pink-500 text-white rounded-full flex items-center justify-center text-2xl shadow-lg pl-1 transition-all group-active:scale-95 animate-pulse">
+            ▶
+          </div>
+          <p class="text-white text-sm font-extrabold mt-4">CLIQUE PARA ASSISTIR O VÍDEO</p>
+          <p class="text-slate-400 text-xs mt-1">O tempo será contabilizado após o clique</p>
+        </div>`;
       
-      if (!videoTimer) {
+      document.getElementById('timer-status').textContent = "Clique no Play acima para iniciar";
+      document.getElementById('timer-count').textContent = "40s restantes";
+      document.getElementById('timer-bar').style.width = '0%';
+      
+      isVideoPlaying = false;
+      secondsWatched = 0;
+      if (videoTimer) {
+        clearInterval(videoTimer);
+        videoTimer = null;
+      }
+    }
+
+    function startVideoPlayback() {
+      const container = document.getElementById('video-container');
+      // Insere o iframe do vídeo apenas quando o usuário realmente clicar
+      container.innerHTML = `<iframe id="yt-player" class="w-full h-full pointer-events-auto" src="https://www.youtube.com/embed/Q6OJeydSN_Y?autoplay=1&mute=0&loop=1&playlist=Q6OJeydSN_Y" title="YouTube Shorts" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+
+      if (!isVideoPlaying) {
+        isVideoPlaying = true;
         startVideoTimer();
       }
     }
@@ -879,14 +912,16 @@
         clearInterval(videoTimer);
         videoTimer = null;
       }
+      isVideoPlaying = false;
     }
 
     function startVideoTimer() {
-      secondsWatched = 0;
       const bar = document.getElementById('timer-bar');
       const statusText = document.getElementById('timer-status');
       const countText = document.getElementById('timer-count');
       const btnDone = document.getElementById('btn-video-done');
+
+      statusText.textContent = "Assistindo ao vídeo...";
 
       videoTimer = setInterval(() => {
         secondsWatched++;

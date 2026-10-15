@@ -13,14 +13,12 @@
     .toast-anim {
       animation: slideDown 0.3s ease-out forwards;
     }
-    /* Hide scrollbar for Chrome, Safari and Opera */
     .no-scrollbar::-webkit-scrollbar {
       display: none;
     }
-    /* Hide scrollbar for IE, Edge and Firefox */
     .no-scrollbar {
-      -ms-overflow-style: none;  /* IE and Edge */
-      scrollbar-width: none;  /* Firefox */
+      -ms-overflow-style: none;
+      scrollbar-width: none;
     }
   </style>
 </head>
@@ -274,7 +272,7 @@
       </button>
     </div>
 
-    <!-- ETAPA 7: Validação do Vídeo (Capa interativa + Carregamento do Vídeo) -->
+    <!-- ETAPA 7: Validação do Vídeo (Reprodutor Otimizado Nativo Sem Tela Preta) -->
     <div id="step-7" class="step-view hidden bg-white rounded-3xl p-6 shadow-xl shadow-slate-100 border border-slate-100 space-y-5">
       <div class="text-center space-y-1">
         <h2 class="text-xl font-bold text-slate-900">Confirmação de Visualização</h2>
@@ -282,7 +280,7 @@
       </div>
       
       <div id="video-container" class="w-full aspect-[9/16] max-h-[340px] bg-slate-900 rounded-2xl overflow-hidden relative shadow-inner flex items-center justify-center">
-        <!-- Capa de apresentação antes do clique -->
+        <!-- Capa do Vídeo com clique direto de reprodução -->
         <div id="video-preview-card" onclick="startVideoPlayback()" class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-b from-slate-800 to-black p-4 text-center cursor-pointer group">
           <div class="w-16 h-16 bg-pink-600 group-hover:bg-pink-500 text-white rounded-full flex items-center justify-center text-2xl shadow-lg pl-1 transition-all group-active:scale-95 animate-pulse">
             ▶
@@ -419,7 +417,7 @@
       </div>
 
       <div class="flex gap-3 overflow-x-auto no-scrollbar pb-1 snap-x">
-        <!-- Card 1 (5 Estrelas) -->
+        <!-- Card 1 -->
         <div class="snap-start shrink-0 w-[240px] bg-white rounded-2xl p-4 border border-slate-100 shadow-sm space-y-2.5">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2.5">
@@ -434,7 +432,7 @@
           <p class="text-xs text-slate-600 leading-snug">"genteee, ta funcionando dmssss pingou aqui!!"</p>
         </div>
 
-        <!-- Card 2 (4 Estrelas - Realista) -->
+        <!-- Card 2 -->
         <div class="snap-start shrink-0 w-[240px] bg-white rounded-2xl p-4 border border-slate-100 shadow-sm space-y-2.5">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2.5">
@@ -449,7 +447,7 @@
           <p class="text-xs text-slate-600 leading-snug">"Aqui demorou um pouquinho no Pix por causa do banco, mas caiu certinho! Valeu d+!"</p>
         </div>
 
-        <!-- Card 3 (5 Estrelas) -->
+        <!-- Card 3 -->
         <div class="snap-start shrink-0 w-[240px] bg-white rounded-2xl p-4 border border-slate-100 shadow-sm space-y-2.5">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2.5">
@@ -464,7 +462,7 @@
           <p class="text-xs text-slate-600 leading-snug">"to amando kkkk paguei as continhas e sobrou troco"</p>
         </div>
 
-        <!-- Card 4 (5 Estrelas) -->
+        <!-- Card 4 -->
         <div class="snap-start shrink-0 w-[240px] bg-white rounded-2xl p-4 border border-slate-100 shadow-sm space-y-2.5">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2.5">
@@ -896,8 +894,9 @@
 
     function startVideoPlayback() {
       const container = document.getElementById('video-container');
-      // Insere o iframe do vídeo apenas quando o usuário realmente clicar
-      container.innerHTML = `<iframe id="yt-player" class="w-full h-full pointer-events-auto" src="https://www.youtube.com/embed/Q6OJeydSN_Y?autoplay=1&mute=0&loop=1&playlist=Q6OJeydSN_Y" title="YouTube Shorts" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+      
+      // Utiliza o formato direto embutido do player com flag de interação direta
+      container.innerHTML = `<iframe id="yt-player" class="w-full h-full pointer-events-auto" src="https://www.youtube-nocookie.com/embed/Q6OJeydSN_Y?autoplay=1&playsinline=1&enablejsapi=1" title="YouTube Shorts" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
 
       if (!isVideoPlaying) {
         isVideoPlaying = true;

